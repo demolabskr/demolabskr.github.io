@@ -1,0 +1,9 @@
+<svg width="320" height="200" viewBox="0 0 320 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="320" height="200" rx="18" fill="#ECE4D7"/>
+  <rect x="20" y="24" width="280" height="96" rx="12" fill="#F7F1E8" stroke="#151515" stroke-width="3"/>
+  <rect x="20" y="136" width="200" height="16" rx="8" fill="#151515" fill-opacity="0.2"/>
+  <rect x="20" y="160" width="120" height="12" rx="6" fill="#151515" fill-opacity="0.12"/>
+  <path d="M226 48h60v48h-60z" fill="#FF6A3D" fill-opacity="0.25" stroke="#151515" stroke-width="3"/>
+  <circle cx="72" cy="72" r="18" fill="#2D6CDF" fill-opacity="0.2" stroke="#151515" stroke-width="3"/>
+  <text x="30" y="108" font-family="Space Grotesk, Arial, sans-serif" font-size="18" fill="#151515">MODULE</text>
+</svg>
