@@ -120,6 +120,16 @@ const initScrollUI = () => {
     });
 };
 
+const setModalState = (modal, isOpen) => {
+    if (!modal) {
+        return;
+    }
+    modal.classList.toggle("is-active", isOpen);
+    modal.setAttribute("aria-hidden", isOpen ? "false" : "true");
+    const hasOpenModal = document.querySelector(".modal.is-active");
+    document.body.classList.toggle("modal-open", Boolean(hasOpenModal));
+};
+
 const initModals = () => {
     const modalTriggers = document.querySelectorAll("[data-modal-target]");
     const modalCloseButtons = document.querySelectorAll("[data-modal-close]");
@@ -127,16 +137,6 @@ const initModals = () => {
     if (!modalTriggers.length && !modalCloseButtons.length) {
         return;
     }
-
-    const setModalState = (modal, isOpen) => {
-        if (!modal) {
-            return;
-        }
-        modal.classList.toggle("is-active", isOpen);
-        modal.setAttribute("aria-hidden", isOpen ? "false" : "true");
-        const hasOpenModal = document.querySelector(".modal.is-active");
-        document.body.classList.toggle("modal-open", Boolean(hasOpenModal));
-    };
 
     modalTriggers.forEach((trigger) => {
         const targetId = trigger.getAttribute("data-modal-target");
@@ -230,6 +230,62 @@ const fetchJson = async (url) => {
     return response.json();
 };
 
+const buildCaseCard = (card) => {
+    const wrapper = document.createElement("div");
+    wrapper.className = "case-card";
+
+    const cardEl = document.createElement("div");
+    cardEl.className = "sharp-card p-5 reveal";
+    const delay = typeof card.delay === "number" ? card.delay : 0;
+    cardEl.style.setProperty("--delay", `${delay}s`);
+
+    const title = document.createElement("h3");
+    title.className = "title is-5";
+    title.textContent = card.title || "";
+
+    const row = document.createElement("div");
+    row.className = "case-card__row";
+
+    const description = document.createElement("p");
+    description.className = "muted case-card__text";
+    description.textContent = card.description || "";
+    row.appendChild(description);
+
+    if (card.image) {
+        const thumbButton = document.createElement("button");
+        thumbButton.className = "case-card__thumb-btn";
+        thumbButton.type = "button";
+        thumbButton.setAttribute("data-case-image", card.image);
+        thumbButton.setAttribute(
+            "data-case-alt",
+            card.imageAlt || "케이스 스터디 이미지",
+        );
+        thumbButton.setAttribute("aria-label", "케이스 스터디 이미지 보기");
+
+        const thumb = document.createElement("img");
+        thumb.src = card.image;
+        thumb.alt = card.imageAlt || "케이스 스터디 이미지";
+        thumbButton.appendChild(thumb);
+        row.appendChild(thumbButton);
+    }
+
+    cardEl.appendChild(title);
+    cardEl.appendChild(row);
+
+    if (card.result) {
+        const divider = document.createElement("div");
+        divider.className = "divider";
+        const result = document.createElement("p");
+        result.className = "muted";
+        result.textContent = card.result;
+        cardEl.appendChild(divider);
+        cardEl.appendChild(result);
+    }
+
+    wrapper.appendChild(cardEl);
+    return wrapper;
+};
+
 const renderCaseStudies = async () => {
     const container = document.querySelector('[data-cards="case-studies"]');
     if (!container) {
@@ -243,50 +299,96 @@ const renderCaseStudies = async () => {
         const cards = Array.isArray(data.cards) ? data.cards : [];
         container.innerHTML = "";
 
-        cards.forEach((card) => {
-            const column = document.createElement("div");
-            column.className = "column is-4";
+        const builtCards = cards.map((card) => buildCaseCard(card));
+        builtCards.forEach((cardEl) => container.appendChild(cardEl));
 
-            const cardEl = document.createElement("div");
-            cardEl.className = "sharp-card p-5 reveal";
-            const delay =
-                typeof card.delay === "number" ? card.delay : 0;
-            cardEl.style.setProperty("--delay", `${delay}s`);
-
-            const title = document.createElement("h3");
-            title.className = "title is-5";
-            title.textContent = card.title || "";
-
-            const description = document.createElement("p");
-            description.className = "muted";
-            description.textContent = card.description || "";
-
-            cardEl.appendChild(title);
-            cardEl.appendChild(description);
-
-            if (card.result) {
-                const divider = document.createElement("div");
-                divider.className = "divider";
-                const result = document.createElement("p");
-                result.className = "muted";
-                result.textContent = card.result;
-                cardEl.appendChild(divider);
-                cardEl.appendChild(result);
-            }
-
-            column.appendChild(cardEl);
-            container.appendChild(column);
+        builtCards.forEach((cardEl) => {
+            const clone = cardEl.cloneNode(true);
+            container.appendChild(clone);
         });
     } catch (error) {
         container.innerHTML = "";
-        const fallback = document.createElement("div");
-        fallback.className = "column is-12";
         const message = document.createElement("p");
         message.className = "muted";
         message.textContent = "케이스 스터디를 불러오지 못했습니다.";
-        fallback.appendChild(message);
-        container.appendChild(fallback);
+        container.appendChild(message);
     }
+};
+
+let caseCarouselTimer;
+
+const initCaseCarousel = () => {
+    const track = document.querySelector('[data-cards="case-studies"]');
+    if (!track || track.children.length < 2) {
+        return;
+    }
+
+    const getStepSize = () => {
+        const firstCard = track.querySelector(".case-card");
+        if (!firstCard) {
+            return 0;
+        }
+        const gapValue = parseFloat(
+            window.getComputedStyle(track).gap || "0",
+        );
+        const gap = Number.isNaN(gapValue) ? 0 : gapValue;
+        return firstCard.getBoundingClientRect().width + gap;
+    };
+
+    let stepSize = getStepSize();
+    const updateStep = () => {
+        stepSize = getStepSize();
+    };
+
+    window.addEventListener("resize", updateStep);
+
+    if (caseCarouselTimer) {
+        window.clearInterval(caseCarouselTimer);
+    }
+
+    const moveNext = () => {
+        if (!stepSize || track.classList.contains("is-animating")) {
+            return;
+        }
+        track.classList.add("is-animating");
+        track.style.transform = `translateX(-${stepSize}px)`;
+
+        const onTransitionEnd = () => {
+            track.classList.remove("is-animating");
+            track.style.transform = "translateX(0)";
+            if (track.firstElementChild) {
+                track.appendChild(track.firstElementChild);
+            }
+            track.removeEventListener("transitionend", onTransitionEnd);
+        };
+
+        track.addEventListener("transitionend", onTransitionEnd);
+    };
+
+    caseCarouselTimer = window.setInterval(moveNext, 7000);
+};
+
+const initCaseImagePreview = () => {
+    const modal = document.getElementById("modal-case-image");
+    if (!modal) {
+        return;
+    }
+    const image = modal.querySelector("[data-case-image-target]");
+
+    document.addEventListener("click", (event) => {
+        const trigger = event.target.closest("[data-case-image]");
+        if (!trigger) {
+            return;
+        }
+        const src = trigger.getAttribute("data-case-image");
+        if (!src || !image) {
+            return;
+        }
+        image.src = src;
+        image.alt =
+            trigger.getAttribute("data-case-alt") || "케이스 스터디 이미지";
+        setModalState(modal, true);
+    });
 };
 
 const renderModules = async () => {
@@ -342,6 +444,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     initScrollUI();
     await loadSections();
     await renderCaseStudies();
+    initCaseCarousel();
+    initCaseImagePreview();
     await renderModules();
     initModals();
     initCopyButtons();

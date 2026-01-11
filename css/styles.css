@@ -330,6 +330,51 @@ strong {
     margin: 1.5rem 0;
 }
 
+.case-carousel {
+    overflow: hidden;
+    margin-top: 2rem;
+    padding: 1rem 1rem 1.75rem;
+}
+
+.case-track {
+    display: flex;
+    gap: 1.5rem;
+    will-change: transform;
+}
+
+.case-track.is-animating {
+    transition: transform 0.6s ease;
+}
+
+.case-card {
+    flex: 0 0 calc((100% - 3rem) / 3);
+}
+
+.case-card__row {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+}
+
+.case-card__text {
+    flex: 1;
+}
+
+.case-card__thumb-btn {
+    border: 1px solid var(--border);
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+    width: 96px;
+    flex: 0 0 auto;
+}
+
+.case-card__thumb-btn img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
 .muted {
     color: var(--muted);
 }
@@ -474,6 +519,21 @@ strong {
     background: var(--surface);
     border: 2px solid var(--border);
     box-shadow: 10px 10px 0 var(--shadow);
+}
+
+.modal__card--image {
+    width: min(960px, 92vw);
+}
+
+.modal__image-wrap {
+    display: flex;
+    justify-content: center;
+}
+
+.modal__image {
+    max-width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
 }
 
 .modal__header {
@@ -624,9 +684,28 @@ strong {
     pointer-events: auto;
 }
 
+@media screen and (max-width: 1024px) {
+    .case-card {
+        flex: 0 0 calc((100% - 1.5rem) / 2);
+    }
+}
+
 @media screen and (max-width: 768px) {
     .sharp-card {
         box-shadow: 6px 6px 0 var(--shadow);
+    }
+
+    .case-card {
+        flex: 0 0 100%;
+    }
+
+    .case-card__row {
+        flex-direction: column;
+    }
+
+    .case-card__thumb-btn {
+        width: 100%;
+        max-width: 200px;
     }
 
     .modal__grid {

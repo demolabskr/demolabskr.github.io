@@ -4,18 +4,24 @@
             "title": "전자계약 시스템",
             "description": "법적 리스크와 운영 부담을 줄이기 위해 증빙·로그·감사 흐름을 먼저 설계.",
             "result": "결과: 계약 처리 시간 단축 · 운영 인력 부담 감소",
+            "image": "sections/case-studies/case-studies-001.png",
+            "imageAlt": "전자계약 시스템 케이스 스터디 이미지",
             "delay": 0.05
         },
         {
             "title": "쇼핑몰 데이터 구조",
             "description": "결제 연동이 아닌 재구매율 중심의 데이터 구조와 상품/혜택 설계에 집중.",
             "result": "결과: 반복 구매를 유도하는 구조 확보",
+            "image": "sections/case-studies/case-studies-001.png",
+            "imageAlt": "쇼핑몰 데이터 구조 케이스 스터디 이미지",
             "delay": 0.1
         },
         {
             "title": "운동·학습 앱",
             "description": "사용자 리텐션을 높이기 위한 게이미피케이션과 코호트 분석 구조 설계.",
             "result": "결과: 반복 사용을 유도하는 서비스 구조 확보",
+            "image": "sections/case-studies/case-studies-001.png",
+            "imageAlt": "운동·학습 앱 케이스 스터디 이미지",
             "delay": 0.15
         }
     ]
