@@ -40,8 +40,17 @@
                     <li>희망 일정/예산</li>
                 </ul>
                 <div class="modal__template">
-                    <p class="eyebrow">이메일 템플릿</p>
-                    <pre>이름:
+                    <div class="modal__template-header">
+                        <p class="eyebrow">이메일 템플릿</p>
+                        <button
+                            class="button ghost-button is-small modal__copy-btn"
+                            type="button"
+                            data-copy-target="mvp-template"
+                        >
+                            템플릿 복사
+                        </button>
+                    </div>
+                    <pre id="mvp-template">이름:
 회사/팀:
 이메일:
 연락처:

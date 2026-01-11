@@ -39,8 +39,17 @@
                     <li>예산 범위</li>
                 </ul>
                 <div class="modal__template">
-                    <p class="eyebrow">이메일 템플릿</p>
-                    <pre>이름:
+                    <div class="modal__template-header">
+                        <p class="eyebrow">이메일 템플릿</p>
+                        <button
+                            class="button ghost-button is-small modal__copy-btn"
+                            type="button"
+                            data-copy-target="collab-template"
+                        >
+                            템플릿 복사
+                        </button>
+                    </div>
+                    <pre id="collab-template">이름:
 회사/팀:
 이메일:
 연락처:

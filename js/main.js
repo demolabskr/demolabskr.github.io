@@ -165,10 +165,68 @@ const initModals = () => {
     });
 };
 
+const initCopyButtons = () => {
+    const copyButtons = document.querySelectorAll("[data-copy-target]");
+    if (!copyButtons.length) {
+        return;
+    }
+
+    copyButtons.forEach((button) => {
+        const defaultLabel = button.textContent.trim();
+        button.dataset.defaultLabel = defaultLabel;
+
+        button.addEventListener("click", async () => {
+            const targetId = button.getAttribute("data-copy-target");
+            const target = document.getElementById(targetId);
+            if (!target) {
+                return;
+            }
+            const text = target.textContent.trim();
+            let copied = false;
+
+            if (navigator.clipboard && window.isSecureContext) {
+                try {
+                    await navigator.clipboard.writeText(text);
+                    copied = true;
+                } catch (error) {
+                    copied = false;
+                }
+            }
+
+            if (!copied) {
+                const textarea = document.createElement("textarea");
+                textarea.value = text;
+                textarea.setAttribute("readonly", "");
+                textarea.style.position = "absolute";
+                textarea.style.left = "-9999px";
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    copied = document.execCommand("copy");
+                } catch (error) {
+                    copied = false;
+                }
+                document.body.removeChild(textarea);
+            }
+
+            if (copied) {
+                button.classList.add("is-copied");
+                button.textContent = "복사 완료";
+                window.setTimeout(() => {
+                    button.classList.remove("is-copied");
+                    button.textContent =
+                        button.dataset.defaultLabel || defaultLabel;
+                }, 2000);
+            }
+        });
+    });
+};
+
 document.addEventListener("DOMContentLoaded", async () => {
     initThemeToggle();
     initNavMenu();
     initScrollUI();
     await loadSections();
     initModals();
+    initCopyButtons();
 });
