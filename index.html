@@ -1,0 +1,1234 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>AIDemoLabs | CTO-as-a-Service</title>
+        <link rel="icon" href="favicon.png" type="image/png" />
+        <meta
+            name="description"
+            content="아이디어를 제품으로 검증하는 기술 파트너, AIDemoLabs. 판단부터 MVP, 운영까지 한 번에."
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        />
+        <style>
+            :root {
+                --bg: #f6f1e8;
+                --surface: #ffffff;
+                --ink: #151515;
+                --muted: #4d4a42;
+        --accent: #ff6a3d;
+        --accent-2: #2d6cdf;
+        --accent-3: #17a17b;
+        --accent-shadow: rgba(255, 106, 61, 0.35);
+        --accent-2-shadow: rgba(45, 108, 223, 0.35);
+        --accent-3-shadow: rgba(23, 161, 123, 0.35);
+        --tier-1: #ffb08a;
+        --tier-2: #ff8a5c;
+        --tier-3: #ff6a3d;
+        --tier-1-shadow: rgba(255, 176, 138, 0.45);
+        --tier-2-shadow: rgba(255, 138, 92, 0.45);
+                --tier-3-shadow: rgba(255, 106, 61, 0.5);
+                --border: #151515;
+                --shadow: #151515;
+                --hero-glow: rgba(255, 106, 61, 0.22);
+                --progress-track: rgba(21, 21, 21, 0.12);
+                --progress-bar: rgba(21, 21, 21, 0.5);
+                --problem-shadow: #7a4cff;
+                --problem-shadow-soft: rgba(122, 76, 255, 0.35);
+      }
+
+            [data-theme="dark"] {
+                --bg: #0d0f12;
+                --surface: #141820;
+                --ink: #f4f1ea;
+                --muted: #b5b2aa;
+        --accent: #ff8a5c;
+        --accent-2: #70a5ff;
+        --accent-3: #20c997;
+        --accent-shadow: rgba(255, 138, 92, 0.4);
+        --accent-2-shadow: rgba(112, 165, 255, 0.38);
+        --accent-3-shadow: rgba(32, 201, 151, 0.38);
+        --tier-1: #ffb08a;
+        --tier-2: #ff8a5c;
+        --tier-3: #ff6a3d;
+        --tier-1-shadow: rgba(255, 176, 138, 0.4);
+        --tier-2-shadow: rgba(255, 138, 92, 0.4);
+        --tier-3-shadow: rgba(255, 106, 61, 0.45);
+        --border: #c9c2b5;
+        --shadow: #090b0f;
+        --hero-glow: rgba(255, 138, 92, 0.16);
+        --progress-track: rgba(255, 255, 255, 0.12);
+        --progress-bar: rgba(255, 255, 255, 0.45);
+        --problem-shadow: #9a7cff;
+        --problem-shadow-soft: rgba(154, 124, 255, 0.38);
+      }
+
+            html {
+                scroll-behavior: smooth;
+                color-scheme: light dark;
+            }
+
+            body {
+                font-family:
+                    "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic",
+                    sans-serif;
+                background: var(--bg);
+                color: var(--ink);
+                padding-top: 4.25rem;
+            }
+
+            body::before,
+            body::after {
+                content: "";
+                position: fixed;
+                inset: 0;
+                z-index: -2;
+                pointer-events: none;
+            }
+
+            body::before {
+                background:
+                    radial-gradient(
+                        900px 420px at 10% 10%,
+                        var(--hero-glow),
+                        transparent 60%
+                    ),
+                    radial-gradient(
+                        800px 420px at 90% 20%,
+                        rgba(45, 108, 223, 0.18),
+                        transparent 55%
+                    );
+            }
+
+            body::after {
+                background-image:
+                    linear-gradient(
+                        90deg,
+                        rgba(0, 0, 0, 0.02) 1px,
+                        transparent 1px
+                    ),
+                    linear-gradient(
+                        0deg,
+                        rgba(0, 0, 0, 0.02) 1px,
+                        transparent 1px
+                    );
+                background-size: 36px 36px;
+                opacity: 0.3;
+                z-index: -3;
+            }
+
+            [data-theme="dark"] body::after {
+                background-image:
+                    linear-gradient(
+                        90deg,
+                        rgba(255, 255, 255, 0.04) 1px,
+                        transparent 1px
+                    ),
+                    linear-gradient(
+                        0deg,
+                        rgba(255, 255, 255, 0.04) 1px,
+                        transparent 1px
+                    );
+            }
+
+            .title,
+            .subtitle,
+            .brand {
+                font-family: "Space Grotesk", "IBM Plex Sans KR", sans-serif;
+                letter-spacing: -0.02em;
+            }
+
+            .title {
+                color: var(--ink);
+            }
+
+            .subtitle {
+                color: var(--muted);
+            }
+
+            strong {
+                color: var(--ink);
+            }
+
+            .section {
+                scroll-margin-top: 90px;
+            }
+
+            .navbar {
+                background: var(--bg);
+                border-bottom: 2px solid var(--border);
+            }
+
+            .navbar-menu {
+                background: var(--bg);
+            }
+
+            .navbar-item,
+            .navbar-link {
+                color: var(--ink);
+            }
+
+            .navbar-item:hover,
+            .navbar-link:hover,
+            .navbar-item.is-active {
+                background: var(--surface);
+                color: var(--ink);
+            }
+
+            .navbar-burger span {
+                background-color: var(--ink);
+            }
+
+            .button,
+            .box,
+            .card,
+            .tag,
+            .input,
+            .textarea,
+            .notification,
+            .navbar,
+            .image img {
+                border-radius: 0 !important;
+            }
+
+            .sharp-card {
+                border: 2px solid var(--border);
+                background: var(--surface);
+                box-shadow: 8px 8px 0 var(--shadow);
+            }
+
+      .sharp-card.is-accent {
+        border-color: var(--accent);
+        box-shadow: 8px 8px 0 var(--accent),
+          0 18px 32px -24px var(--accent-shadow);
+      }
+
+      .sharp-card.is-blue {
+        border-color: var(--accent-2);
+        box-shadow: 8px 8px 0 var(--accent-2),
+          0 18px 32px -24px var(--accent-2-shadow);
+      }
+
+            .sharp-card.is-green {
+                border-color: var(--accent-3);
+                box-shadow: 8px 8px 0 var(--accent-3),
+                  0 18px 32px -24px var(--accent-3-shadow);
+            }
+
+            #problem .sharp-card {
+                box-shadow: 8px 8px 0 var(--problem-shadow),
+                    0 18px 32px -24px var(--problem-shadow-soft);
+            }
+
+            .pricing-tier-1 {
+                border-color: var(--tier-1);
+                box-shadow: 8px 8px 0 var(--tier-1),
+          0 18px 32px -24px var(--tier-1-shadow);
+      }
+
+      .pricing-tier-2 {
+        border-color: var(--tier-2);
+        box-shadow: 8px 8px 0 var(--tier-2),
+          0 18px 32px -24px var(--tier-2-shadow);
+      }
+
+      .pricing-tier-3 {
+        border-color: var(--tier-3);
+        box-shadow: 8px 8px 0 var(--tier-3),
+          0 18px 32px -24px var(--tier-3-shadow);
+      }
+
+            .eyebrow {
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.12em;
+                font-size: 0.75rem;
+                color: var(--muted);
+            }
+
+            .hero-title {
+                font-size: clamp(2.2rem, 5vw, 3.8rem);
+            }
+
+            .hero-sub {
+                font-size: clamp(1.1rem, 2vw, 1.35rem);
+                color: var(--muted);
+            }
+
+            .tag.is-outline {
+                border: 1px solid var(--border);
+                color: var(--ink);
+                background: transparent;
+            }
+
+            .stat {
+                font-weight: 600;
+                font-size: 1.4rem;
+            }
+
+            .pill {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.4rem;
+                padding: 0.35rem 0.6rem;
+                border: 1px solid var(--border);
+                font-size: 0.85rem;
+            }
+
+            .divider {
+                height: 2px;
+                background: var(--border);
+                opacity: 0.3;
+                margin: 1.5rem 0;
+            }
+
+            .muted {
+                color: var(--muted);
+            }
+
+            .reveal {
+                opacity: 0;
+                transform: translateY(10px);
+                animation: rise 0.7s ease forwards;
+                animation-delay: var(--delay, 0s);
+            }
+
+            @keyframes rise {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .cta-button {
+                background: var(--accent);
+                border: 2px solid var(--border);
+                color: #101010;
+                font-weight: 700;
+            }
+
+            .cta-button:hover {
+                background: #ff7d56;
+                color: #101010;
+            }
+
+            [data-theme="dark"] .cta-button {
+                color: #0c0c0c;
+            }
+
+            .ghost-button {
+                border: 2px solid var(--border);
+                background: transparent;
+                color: var(--ink);
+            }
+
+            #themeToggle {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 40px;
+                height: 40px;
+                padding: 0;
+                border: 0;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            #themeToggle svg {
+                width: 18px;
+                height: 18px;
+                display: block;
+            }
+
+            [data-theme="light"] #themeToggle .icon-sun {
+                display: block;
+            }
+
+            [data-theme="light"] #themeToggle .icon-moon {
+                display: none;
+            }
+
+            [data-theme="dark"] #themeToggle .icon-sun {
+                display: none;
+            }
+
+            [data-theme="dark"] #themeToggle .icon-moon {
+                display: block;
+            }
+
+            #themeToggle:active,
+            #themeToggle:focus,
+            #themeToggle.is-active {
+                background: transparent;
+                color: var(--ink);
+                box-shadow: none;
+            }
+
+            .link-anchor {
+                font-weight: 600;
+                color: var(--accent-2);
+            }
+
+            .navbar-end .navbar-item::after {
+                content: "|";
+                margin: 0 0.6rem;
+                color: var(--border);
+                opacity: 0.5;
+                pointer-events: none;
+            }
+
+            .navbar-end .navbar-item:last-child::after {
+                content: "";
+                margin: 0;
+            }
+
+            .footer {
+                background: transparent;
+                border-top: 2px solid var(--border);
+            }
+
+            .content {
+                color: var(--ink);
+            }
+
+            .scroll-progress {
+                position: fixed;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                height: 6px;
+                background: var(--progress-track);
+                z-index: 40;
+                pointer-events: none;
+            }
+
+            .scroll-progress__bar {
+                height: 100%;
+                width: 0;
+                background: var(--progress-bar);
+                transition: width 0.12s linear;
+            }
+
+            .scroll-top {
+                position: fixed;
+                right: clamp(1rem, 3vw, 2rem);
+                bottom: calc(1rem + 8px);
+                width: 48px;
+                height: 48px;
+                border: 2px solid var(--border);
+                background: var(--surface);
+                color: var(--ink);
+                font-family: "Space Grotesk", "IBM Plex Sans KR", sans-serif;
+                font-weight: 600;
+                letter-spacing: 0.04em;
+                text-transform: uppercase;
+                opacity: 0;
+                transform: translateY(12px);
+                pointer-events: none;
+                cursor: pointer;
+                transition:
+                    opacity 0.25s ease,
+                    transform 0.25s ease,
+                    background 0.2s ease;
+                z-index: 50;
+            }
+
+            .scroll-top:hover {
+                background: #f4efe6;
+            }
+
+            [data-theme="dark"] .scroll-top:hover {
+                background: #1e2330;
+            }
+
+            .scroll-top.is-visible {
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+
+            @media screen and (max-width: 768px) {
+                .sharp-card {
+                    box-shadow: 6px 6px 0 var(--shadow);
+                }
+
+                body::after {
+                    background-size: 28px 28px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <nav
+            class="navbar is-fixed-top"
+            role="navigation"
+            aria-label="main navigation"
+        >
+            <div class="navbar-brand">
+                <a class="navbar-item brand" href="#hero"> AIDemoLabs </a>
+                <a
+                    role="button"
+                    class="navbar-burger"
+                    aria-label="menu"
+                    aria-expanded="false"
+                    data-target="navMenu"
+                >
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+
+            <div id="navMenu" class="navbar-menu">
+                <div class="navbar-end">
+                    <a class="navbar-item" href="#problem">문제</a>
+                    <a class="navbar-item" href="#solution">해결</a>
+                    <a class="navbar-item" href="#strengths">강점</a>
+                    <a class="navbar-item" href="#cases">사례</a>
+                    <a class="navbar-item" href="#process">프로세스</a>
+                    <a class="navbar-item" href="#pricing">가격</a>
+                    <a class="navbar-item" href="#faq">FAQ</a>
+                    <div class="navbar-item">
+                        <button
+                            id="themeToggle"
+                            class="button ghost-button is-small"
+                            type="button"
+                            aria-label="다크 모드로 전환"
+                        >
+                            <svg
+                                class="icon-sun"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <circle cx="12" cy="12" r="5"></circle>
+                                <line x1="12" y1="1" x2="12" y2="3"></line>
+                                <line x1="12" y1="21" x2="12" y2="23"></line>
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                <line x1="1" y1="12" x2="3" y2="12"></line>
+                                <line x1="21" y1="12" x2="23" y2="12"></line>
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                            </svg>
+                            <svg
+                                class="icon-moon"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"
+                                ></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <section id="hero" class="section">
+            <div class="container">
+                <div class="columns is-vcentered">
+                    <div class="column is-7">
+                        <p class="eyebrow reveal" style="--delay: 0s">
+                            CTO-as-a-Service
+                        </p>
+                        <h1
+                            class="title hero-title reveal"
+                            style="--delay: 0.05s"
+                        >
+                            CTO를 빌려 쓰세요.
+                        </h1>
+                        <p class="hero-sub reveal" style="--delay: 0.1s">
+                            아이디어를 제품으로 검증하는 기술 파트너
+                            <strong>AIDemoLabs</strong>
+                        </p>
+                        <div
+                            class="tags are-medium mt-4 reveal"
+                            style="--delay: 0.15s"
+                        >
+                            <span class="tag is-outline"
+                                >26년 IT·서비스 경험</span
+                            >
+                            <span class="tag is-outline">교육공학 박사</span>
+                            <span class="tag is-outline">Django · Next.js</span>
+                            <span class="tag is-outline">MVP & 운영 설계</span>
+                        </div>
+                        <div class="buttons mt-5 reveal" style="--delay: 0.2s">
+                            <a class="button cta-button" href="#pricing"
+                                >MVP 구조 진단 신청하기</a
+                            >
+                            <a class="button ghost-button" href="#contact"
+                                >협업 문의</a
+                            >
+                        </div>
+                        <p class="muted mt-4 reveal" style="--delay: 0.25s">
+                            기술은 증거일 뿐. 중요한 건
+                            <strong>무엇을 만들지 / 안 만들지</strong>의
+                            판단입니다.
+                        </p>
+                    </div>
+                    <div class="column is-5">
+                        <div
+                            class="sharp-card p-5 reveal"
+                            style="--delay: 0.15s"
+                        >
+                            <p class="eyebrow">MVP 구조 진단</p>
+                            <h3 class="title is-4 mt-2">
+                                유료로 먼저 판단합니다
+                            </h3>
+                            <p class="muted">
+                                만들 가치가 있는지, 어디서 멈춰야 하는지 먼저
+                                정리합니다.
+                            </p>
+                            <div class="divider"></div>
+                            <div class="columns is-mobile">
+                                <div class="column">
+                                    <p class="stat">3~5일</p>
+                                    <p class="muted">진단 기간</p>
+                                </div>
+                                <div class="column">
+                                    <p class="stat">고정가</p>
+                                    <p class="muted">
+                                        진단 범위에 따른 2단계 요금 체계
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="divider"></div>
+                            <p class="muted">
+                                결과물: 범위 컷, 구조 요약, 다음 단계 선택지
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="problem" class="section">
+            <div class="container">
+                <div class="columns">
+                    <div class="column is-5">
+                        <p class="eyebrow">Problem</p>
+                        <h2 class="title is-3">
+                            문제는 기술이 아니라 결정입니다
+                        </h2>
+                        <p class="muted">
+                            창업자/대표가 겪는 막힘은 대부분 “무엇을 먼저
+                            만들지”에서 시작됩니다.
+                        </p>
+                    </div>
+                    <div class="column is-7">
+                        <div
+                            class="sharp-card p-5 is-blue reveal"
+                            style="--delay: 0.05s"
+                        >
+                            <ul>
+                                <li class="mb-3">
+                                    아이디어는 있는데
+                                    <strong>무엇부터 만들어야 할지 모름</strong>
+                                </li>
+                                <li class="mb-3">
+                                    외주를 맡겼더니
+                                    <strong>기능만 늘고 방향이 흐려짐</strong>
+                                </li>
+                                <li class="mb-3">
+                                    MVP 범위를 못 정해
+                                    <strong>개발이 시작되지 않음</strong>
+                                </li>
+                                <li class="mb-3">
+                                    만들긴 했는데
+                                    <strong>이게 돈이 될지 판단이 안 됨</strong>
+                                </li>
+                                <li>
+                                    CTO를 뽑기엔 이르고
+                                    <strong>판단해 줄 사람이 없음</strong>
+                                </li>
+                            </ul>
+                            <p class="muted mt-4">
+                                그래서 먼저
+                                <strong>판단을 상품화</strong>합니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solution" class="section">
+            <div class="container">
+                <p class="eyebrow">Solution</p>
+                <h2 class="title is-3">개발보다 먼저, 구조를 잡습니다</h2>
+                <div class="columns mt-5">
+                    <div class="column">
+                        <div
+                            class="sharp-card p-5 is-accent reveal"
+                            style="--delay: 0.05s"
+                        >
+                            <h3 class="title is-5">1. MVP 스코프 컷</h3>
+                            <p class="muted">
+                                2주 안에 검증 가능한 범위로 줄입니다. 버려야 할
+                                기능을 먼저 제거합니다.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div
+                            class="sharp-card p-5 is-blue reveal"
+                            style="--delay: 0.1s"
+                        >
+                            <h3 class="title is-5">2. 구현 & 배포</h3>
+                            <p class="muted">
+                                Django · Next.js 기반. 만들고 끝이 아니라 운영
+                                가능한 구조로 배포합니다.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div
+                            class="sharp-card p-5 is-green reveal"
+                            style="--delay: 0.15s"
+                        >
+                            <h3 class="title is-5">3. 운영 판단 문서</h3>
+                            <p class="muted">
+                                왜 이렇게 설계했는지, 다음에 무엇을 해야
+                                하는지를 남깁니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="strengths" class="section">
+            <div class="container">
+                <p class="eyebrow">Strengths</p>
+                <h2 class="title is-3">기술이 아니라 결과로 말합니다</h2>
+                <div class="columns mt-5 is-multiline">
+                    <div class="column is-6">
+                        <div
+                            class="sharp-card p-5 reveal"
+                            style="--delay: 0.05s"
+                        >
+                            <h3 class="title is-5">비즈니스 로직 전문가</h3>
+                            <p class="muted">
+                                쇼핑몰, 전자계약, 교육/콘텐츠 등 수익 모델이
+                                있는 서비스 구조를 다룹니다.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="column is-6">
+                        <div
+                            class="sharp-card p-5 reveal"
+                            style="--delay: 0.1s"
+                        >
+                            <h3 class="title is-5">에이전틱 워크플로우</h3>
+                            <p class="muted">
+                                기획–개발–테스트를 통합해 반복 비용을 줄이고,
+                                빠르게 팔 수 있는 버전을 만듭니다.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="column is-6">
+                        <div
+                            class="sharp-card p-5 reveal"
+                            style="--delay: 0.15s"
+                        >
+                            <h3 class="title is-5">안정성과 신뢰</h3>
+                            <p class="muted">
+                                법적 효력, 보안, 유지보수 편의성을 먼저
+                                설계합니다. 대표가 안심하는 구조입니다.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="column is-6">
+                        <div
+                            class="sharp-card p-5 reveal"
+                            style="--delay: 0.2s"
+                        >
+                            <h3 class="title is-5">복잡한 도메인 구조화</h3>
+                            <p class="muted">
+                                교육공학 박사 + 26년 IT 경험은 “복잡한 문제를
+                                빠르게 구조화”하는 신뢰 증폭기입니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cases" class="section">
+            <div class="container">
+                <p class="eyebrow">Case Studies</p>
+                <h2 class="title is-3">나열이 아닌, 문제 해결 기록</h2>
+                <div class="columns mt-5 is-multiline">
+                    <div class="column is-4">
+                        <div
+                            class="sharp-card p-5 reveal"
+                            style="--delay: 0.05s"
+                        >
+                            <h3 class="title is-5">전자계약 시스템</h3>
+                            <p class="muted">
+                                법적 리스크와 운영 부담을 줄이기 위해
+                                증빙·로그·감사 흐름을 먼저 설계.
+                            </p>
+                            <div class="divider"></div>
+                            <p class="muted">
+                                결과: 계약 처리 시간 단축 · 운영 인력 부담 감소
+                            </p>
+                        </div>
+                    </div>
+                    <div class="column is-4">
+                        <div
+                            class="sharp-card p-5 reveal"
+                            style="--delay: 0.1s"
+                        >
+                            <h3 class="title is-5">쇼핑몰 데이터 구조</h3>
+                            <p class="muted">
+                                결제 연동이 아닌 재구매율 중심의 데이터 구조와
+                                상품/혜택 설계에 집중.
+                            </p>
+                            <div class="divider"></div>
+                            <p class="muted">
+                                결과: 반복 구매를 유도하는 구조 확보
+                            </p>
+                        </div>
+                    </div>
+                    <div class="column is-4">
+                        <div
+                            class="sharp-card p-5 reveal"
+                            style="--delay: 0.15s"
+                        >
+                            <h3 class="title is-5">운동·학습 앱</h3>
+                            <p class="muted">
+                                사용자 리텐션을 높이기 위한 게이미피케이션과
+                                코호트 분석 구조 설계.
+                            </p>
+                            <div class="divider"></div>
+                            <p class="muted">
+                                결과: 반복 사용을 유도하는 서비스 구조 확보
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="modules" class="section">
+            <div class="container">
+                <p class="eyebrow">Modules</p>
+                <h2 class="title is-3">재사용 가능한 문제 해결 모듈</h2>
+                <div class="columns mt-5 is-multiline">
+                    <div class="column is-4">
+                        <div
+                            class="sharp-card p-4 reveal"
+                            style="--delay: 0.05s"
+                        >
+                            <h3 class="title is-6">전자계약/서명 모듈</h3>
+                            <p class="muted">
+                                B2B 계약의 법적·운영 리스크 감소
+                            </p>
+                        </div>
+                    </div>
+                    <div class="column is-4">
+                        <div
+                            class="sharp-card p-4 reveal"
+                            style="--delay: 0.1s"
+                        >
+                            <h3 class="title is-6">결제/정산/쿠폰 모듈</h3>
+                            <p class="muted">가격 정책 변경이 쉬운 수익 구조</p>
+                        </div>
+                    </div>
+                    <div class="column is-4">
+                        <div
+                            class="sharp-card p-4 reveal"
+                            style="--delay: 0.15s"
+                        >
+                            <h3 class="title is-6">어드민/권한/로그 모듈</h3>
+                            <p class="muted">운영 인력 없이도 굴러가는 구조</p>
+                        </div>
+                    </div>
+                    <div class="column is-4">
+                        <div
+                            class="sharp-card p-4 reveal"
+                            style="--delay: 0.2s"
+                        >
+                            <h3 class="title is-6">콘텐츠/강의 운영 모듈</h3>
+                            <p class="muted">
+                                교육/콘텐츠 비즈니스의 확장 기반
+                            </p>
+                        </div>
+                    </div>
+                    <div class="column is-4">
+                        <div
+                            class="sharp-card p-4 reveal"
+                            style="--delay: 0.25s"
+                        >
+                            <h3 class="title is-6">데이터 분석 구조</h3>
+                            <p class="muted">
+                                리텐션과 의사결정에 필요한 지표 설계
+                            </p>
+                        </div>
+                    </div>
+                    <div class="column is-4">
+                        <div
+                            class="sharp-card p-4 reveal"
+                            style="--delay: 0.3s"
+                        >
+                            <h3 class="title is-6">AI 워크플로우</h3>
+                            <p class="muted">
+                                반복 작업을 줄이는 에이전틱 자동화
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="process" class="section">
+            <div class="container">
+                <p class="eyebrow">Process</p>
+                <h2 class="title is-3">예측 가능한 5단계 프로세스</h2>
+                <div class="columns mt-5">
+                    <div class="column is-7">
+                        <div
+                            class="sharp-card p-5 reveal"
+                            style="--delay: 0.05s"
+                        >
+                            <ol>
+                                <li class="mb-3">
+                                    <strong>1. MVP 구조 진단 (유료)</strong>
+                                </li>
+                                <li class="mb-3">2. 범위 확정 및 MVP 설계</li>
+                                <li class="mb-3">3. 1차 데모 및 빠른 검증</li>
+                                <li class="mb-3">4. 수정 범위 확정 후 구현</li>
+                                <li>5. 배포 & 운영 가이드 제공</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="column is-5">
+                        <div
+                            class="sharp-card p-5 reveal"
+                            style="--delay: 0.1s"
+                        >
+                            <h3 class="title is-5">핵심 원칙</h3>
+                            <p class="muted">
+                                “상담 → 바로 견적”은 하지 않습니다. 판단이
+                                먼저고, 구현은 그 다음입니다.
+                            </p>
+                            <p class="pill mt-4">판단 = 유료 상품</p>
+                            <p class="pill mt-2">구현 = 고정가 패키지</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="section">
+            <div class="container">
+                <p class="eyebrow">Pricing</p>
+                <h2 class="title is-3">가격 보다 가치를 지향합니다</h2>
+                <div class="columns mt-5 is-multiline">
+                    <div class="column is-4">
+                        <div
+                            class="sharp-card p-5 reveal"
+                            style="--delay: 0.05s"
+                        >
+                            <p class="eyebrow">Entry</p>
+                            <h3 class="title is-5">MVP 구조 진단</h3>
+                            <p class="muted">
+                                고객의 자료를 바탕으로 아이디어 구조화, 범위 컷,
+                                기술 구조 요약, 다음 단계 제안.
+                            </p>
+                            <div class="divider"></div>
+                            <p><strong>유료 / 고정가</strong></p>
+                            <p class="muted">기간: 3~5일</p>
+                        </div>
+                    </div>
+                    <div class="column is-4">
+                        <div
+                            class="sharp-card p-5 pricing-tier-2 reveal"
+                            style="--delay: 0.1s"
+                        >
+                            <p class="eyebrow">Core</p>
+                            <h3 class="title is-5">MVP 검증 패키지</h3>
+                            <p class="muted">
+                                진단에서 확정된 범위만 구현합니다. 기능 추가는
+                                다음 단계입니다.
+                            </p>
+                            <div class="divider"></div>
+                            <p><strong>300만 원 ~</strong></p>
+                            <p class="muted">2~4주 / 범위 고정</p>
+                        </div>
+                    </div>
+                    <div class="column is-4">
+                        <div
+                            class="sharp-card p-5 pricing-tier-3 reveal"
+                            style="--delay: 0.15s"
+                        >
+                            <p class="eyebrow">Premium</p>
+                            <h3 class="title is-5">운영형 파트너십</h3>
+                            <p class="muted">
+                                기능 개발이 아니라 기술 의사결정을 함께하는 월
+                                단위 파트너십.
+                            </p>
+                            <div class="divider"></div>
+                            <p><strong>월 단위 계약</strong></p>
+                            <p class="muted">유지보수 · 개선 · 기술 판단</p>
+                        </div>
+                    </div>
+                </div>
+                <p class="muted mt-4">
+                    진단 결과는 이후 다른 개발자와 진행하셔도 괜찮습니다. 판단
+                    자체가 가치입니다.
+                </p>
+            </div>
+        </section>
+
+        <section id="boundary" class="section">
+            <div class="container">
+                <p class="eyebrow">Boundary</p>
+                <h2 class="title is-3">이런 방식의 협업은 하지 않습니다</h2>
+                <div class="columns mt-5">
+                    <div class="column is-7">
+                        <div
+                            class="sharp-card p-5 reveal"
+                            style="--delay: 0.05s"
+                        >
+                            <ul>
+                                <li class="mb-3">
+                                    요구사항 없이 “일단 만들어달라”는 요청
+                                </li>
+                                <li class="mb-3">
+                                    단가만 기준으로 비교하는 프로젝트
+                                </li>
+                                <li class="mb-3">
+                                    책임과 의사결정이 불분명한 협업
+                                </li>
+                                <li>아이디어 검토만 무료로 요청하는 방식</li>
+                            </ul>
+                            <p class="muted mt-4">
+                                대신, <strong>결정을 함께 할 파트너</strong>와만
+                                일합니다.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="column is-5">
+                        <div
+                            class="sharp-card p-5 reveal"
+                            style="--delay: 0.1s"
+                        >
+                            <h3 class="title is-5">부가 옵션</h3>
+                            <p class="muted">
+                                비즈니스 모델 컨설팅이 필요한 경우, 별도의
+                                상품으로 제공합니다.
+                            </p>
+                            <p class="pill mt-4">전략 컨설팅</p>
+                            <p class="pill mt-2">수익 구조 설계</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="section">
+            <div class="container">
+                <p class="eyebrow">FAQ</p>
+                <h2 class="title is-3">자주 묻는 질문</h2>
+                <div class="columns mt-5 is-multiline">
+                    <div class="column is-6">
+                        <div
+                            class="sharp-card p-5 reveal"
+                            style="--delay: 0.05s"
+                        >
+                            <h3 class="title is-6">왜 진단이 유료인가요?</h3>
+                            <p class="muted">
+                                개발보다 중요한 것은 ‘무엇을 안 만들지’의
+                                판단입니다. 이 판단이 핵심 가치입니다.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="column is-6">
+                        <div
+                            class="sharp-card p-5 reveal"
+                            style="--delay: 0.1s"
+                        >
+                            <h3 class="title is-6">
+                                비개발자도 진행할 수 있나요?
+                            </h3>
+                            <p class="muted">
+                                가능합니다. 비즈니스 언어로 의사결정 구조를
+                                정리하는 것이 출발점입니다.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="column is-6">
+                        <div
+                            class="sharp-card p-5 reveal"
+                            style="--delay: 0.15s"
+                        >
+                            <h3 class="title is-6">
+                                기술 스택 변경이 가능한가요?
+                            </h3>
+                            <p class="muted">
+                                가능합니다. 단, MVP 목적과 운영 구조에 맞는
+                                선택을 우선합니다.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="column is-6">
+                        <div
+                            class="sharp-card p-5 reveal"
+                            style="--delay: 0.2s"
+                        >
+                            <h3 class="title is-6">
+                                소규모 프로젝트도 가능한가요?
+                            </h3>
+                            <p class="muted">
+                                가능합니다. 단, 구조 진단을 통해 “작게 시작할
+                                이유”가 명확해야 합니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section">
+            <div class="container">
+                <div class="sharp-card p-6 reveal" style="--delay: 0.05s">
+                    <div class="columns is-vcentered">
+                        <div class="column is-7">
+                            <p class="eyebrow">Final CTA</p>
+                            <h2 class="title is-3">
+                                MVP 구조 진단을 먼저 받아보세요.
+                            </h2>
+                            <p class="muted">
+                                개발은 그 다음입니다. 판단이 선행될수록 비용은
+                                줄어듭니다.
+                            </p>
+                        </div>
+                        <div class="column is-5 has-text-right">
+                            <a
+                                class="button cta-button is-large"
+                                href="mailto:hello@aidemolabs.com"
+                            >
+                                MVP 구조 진단 신청하기
+                            </a>
+                            <p class="muted mt-3">
+                                이메일로 진단을 원하시는 자세한 자료를
+                                보내주세요.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="content has-text-centered">
+                <p class="brand">AIDemoLabs</p>
+                <p class="muted">Ideas into products. Faster.</p>
+            </div>
+        </footer>
+
+        <button id="scrollTopBtn" class="scroll-top" type="button">
+            TOP
+        </button>
+        <div class="scroll-progress" aria-hidden="true">
+            <div id="scrollProgress" class="scroll-progress__bar"></div>
+        </div>
+
+        <script>
+            const root = document.documentElement;
+            const toggle = document.getElementById("themeToggle");
+            const storedTheme = localStorage.getItem("theme");
+            const prefersDark = window.matchMedia(
+                "(prefers-color-scheme: dark)",
+            ).matches;
+
+            const setTheme = (theme) => {
+                root.setAttribute("data-theme", theme);
+                root.style.colorScheme = theme;
+                toggle.setAttribute(
+                    "aria-label",
+                    theme === "dark" ? "라이트 모드로 전환" : "다크 모드로 전환",
+                );
+                toggle.setAttribute("aria-pressed", theme === "dark");
+                localStorage.setItem("theme", theme);
+            };
+
+            setTheme(storedTheme || (prefersDark ? "dark" : "light"));
+
+            toggle.addEventListener("click", () => {
+                const next =
+                    root.getAttribute("data-theme") === "dark"
+                        ? "light"
+                        : "dark";
+                setTheme(next);
+            });
+
+            const burger = document.querySelector(".navbar-burger");
+            const menu = document.getElementById("navMenu");
+            if (burger && menu) {
+                burger.addEventListener("click", () => {
+                    burger.classList.toggle("is-active");
+                    menu.classList.toggle("is-active");
+                });
+            }
+
+            const scrollTopBtn = document.getElementById("scrollTopBtn");
+            const scrollProgress = document.getElementById("scrollProgress");
+            let scrollTicking = false;
+
+            const updateScrollUI = () => {
+                const scrollTop =
+                    window.pageYOffset || document.documentElement.scrollTop;
+                const scrollHeight =
+                    document.documentElement.scrollHeight -
+                    document.documentElement.clientHeight;
+                const progress =
+                    scrollHeight > 0 ? scrollTop / scrollHeight : 0;
+
+                scrollProgress.style.width = `${progress * 100}%`;
+
+                if (scrollTop > 240) {
+                    scrollTopBtn.classList.add("is-visible");
+                } else {
+                    scrollTopBtn.classList.remove("is-visible");
+                }
+
+                scrollTicking = false;
+            };
+
+            const onScroll = () => {
+                if (!scrollTicking) {
+                    window.requestAnimationFrame(updateScrollUI);
+                    scrollTicking = true;
+                }
+            };
+
+            window.addEventListener("scroll", onScroll, { passive: true });
+            window.addEventListener("resize", onScroll);
+            updateScrollUI();
+
+            scrollTopBtn.addEventListener("click", () => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+        </script>
+    </body>
+</html>
