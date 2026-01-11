@@ -222,11 +222,127 @@ const initCopyButtons = () => {
     });
 };
 
+const fetchJson = async (url) => {
+    const response = await fetch(url);
+    if (!response.ok) {
+        throw new Error("Failed to load JSON");
+    }
+    return response.json();
+};
+
+const renderCaseStudies = async () => {
+    const container = document.querySelector('[data-cards="case-studies"]');
+    if (!container) {
+        return;
+    }
+
+    try {
+        const data = await fetchJson(
+            "sections/case-studies/case-studies.json",
+        );
+        const cards = Array.isArray(data.cards) ? data.cards : [];
+        container.innerHTML = "";
+
+        cards.forEach((card) => {
+            const column = document.createElement("div");
+            column.className = "column is-4";
+
+            const cardEl = document.createElement("div");
+            cardEl.className = "sharp-card p-5 reveal";
+            const delay =
+                typeof card.delay === "number" ? card.delay : 0;
+            cardEl.style.setProperty("--delay", `${delay}s`);
+
+            const title = document.createElement("h3");
+            title.className = "title is-5";
+            title.textContent = card.title || "";
+
+            const description = document.createElement("p");
+            description.className = "muted";
+            description.textContent = card.description || "";
+
+            cardEl.appendChild(title);
+            cardEl.appendChild(description);
+
+            if (card.result) {
+                const divider = document.createElement("div");
+                divider.className = "divider";
+                const result = document.createElement("p");
+                result.className = "muted";
+                result.textContent = card.result;
+                cardEl.appendChild(divider);
+                cardEl.appendChild(result);
+            }
+
+            column.appendChild(cardEl);
+            container.appendChild(column);
+        });
+    } catch (error) {
+        container.innerHTML = "";
+        const fallback = document.createElement("div");
+        fallback.className = "column is-12";
+        const message = document.createElement("p");
+        message.className = "muted";
+        message.textContent = "케이스 스터디를 불러오지 못했습니다.";
+        fallback.appendChild(message);
+        container.appendChild(fallback);
+    }
+};
+
+const renderModules = async () => {
+    const container = document.querySelector('[data-cards="modules"]');
+    if (!container) {
+        return;
+    }
+
+    try {
+        const data = await fetchJson("sections/modules/modules.json");
+        const cards = Array.isArray(data.cards) ? data.cards : [];
+        container.innerHTML = "";
+
+        cards.forEach((card) => {
+            const column = document.createElement("div");
+            column.className = "column is-4";
+
+            const cardEl = document.createElement("div");
+            cardEl.className = "sharp-card p-4 reveal";
+            const delay =
+                typeof card.delay === "number" ? card.delay : 0;
+            cardEl.style.setProperty("--delay", `${delay}s`);
+
+            const title = document.createElement("h3");
+            title.className = "title is-6";
+            title.textContent = card.title || "";
+
+            const description = document.createElement("p");
+            description.className = "muted";
+            description.textContent = card.description || "";
+
+            cardEl.appendChild(title);
+            cardEl.appendChild(description);
+
+            column.appendChild(cardEl);
+            container.appendChild(column);
+        });
+    } catch (error) {
+        container.innerHTML = "";
+        const fallback = document.createElement("div");
+        fallback.className = "column is-12";
+        const message = document.createElement("p");
+        message.className = "muted";
+        message.textContent = "모듈 카드를 불러오지 못했습니다.";
+        fallback.appendChild(message);
+        container.appendChild(fallback);
+    }
+};
+
 document.addEventListener("DOMContentLoaded", async () => {
     initThemeToggle();
     initNavMenu();
     initScrollUI();
     await loadSections();
+    await renderCaseStudies();
+    await renderModules();
     initModals();
     initCopyButtons();
 });
