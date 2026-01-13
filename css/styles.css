@@ -778,6 +778,22 @@ strong {
         box-shadow: 6px 6px 0 var(--shadow);
     }
 
+    #contact .title.is-3 {
+        font-size: 1.6rem;
+    }
+
+    #contact .muted {
+        font-size: 0.95rem;
+    }
+
+    #contact .cta-button.is-large {
+        font-size: 1rem;
+        padding: 0.8rem 1.1rem;
+        line-height: 1.2;
+        white-space: normal;
+        max-width: 100%;
+    }
+
     .case-card {
         flex: 0 0 100%;
     }
