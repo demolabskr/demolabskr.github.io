@@ -558,6 +558,14 @@ strong {
     padding-bottom: 3.5rem;
 }
 
+.footer .content p {
+    margin-bottom: 0.35rem;
+}
+
+.footer .content p:last-child {
+    margin-bottom: 0;
+}
+
 .content {
     color: var(--ink);
 }
