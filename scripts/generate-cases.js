@@ -4,7 +4,8 @@ const fs = require("fs/promises");
 const path = require("path");
 
 const rootDir = path.resolve(__dirname, "..");
-const dataFile = path.join(
+const casesDataDir = path.join(rootDir, "cases-data");
+const legacyJsonFile = path.join(
     rootDir,
     "sections",
     "case-studies",
@@ -62,8 +63,6 @@ const formatDate = (value) => {
     }).format(parsed);
 };
 
-const stripHtml = (value) => String(value ?? "").replace(/<[^>]*>/g, " ");
-
 const toIsoDate = (value) => {
     const parsed = parseDate(value);
     return parsed ? parsed.toISOString() : new Date().toISOString();
@@ -100,6 +99,190 @@ const getImagePathForDepth = (imagePath, depth) => {
     }
     return imagePath;
 };
+
+const parseFrontmatter = (text) => {
+    const normalized = String(text || "").replace(/\r\n/g, "\n");
+    if (!normalized.startsWith("---\n")) {
+        return { meta: {}, body: normalized.trim() };
+    }
+
+    const endIndex = normalized.indexOf("\n---\n", 4);
+    if (endIndex === -1) {
+        return { meta: {}, body: normalized.trim() };
+    }
+
+    const frontmatterText = normalized.slice(4, endIndex);
+    const body = normalized.slice(endIndex + 5).trim();
+    const lines = frontmatterText.split("\n");
+    const meta = {};
+    let activeListKey = null;
+
+    lines.forEach((line) => {
+        if (!line.trim()) {
+            return;
+        }
+
+        if (activeListKey) {
+            const listMatch = line.match(/^\s*-\s+(.*)$/);
+            if (listMatch) {
+                meta[activeListKey].push(listMatch[1].trim());
+                return;
+            }
+            activeListKey = null;
+        }
+
+        const fieldMatch = line.match(/^([a-zA-Z0-9_]+):\s*(.*)$/);
+        if (!fieldMatch) {
+            return;
+        }
+
+        const [, key, rawValue] = fieldMatch;
+        if (rawValue === "") {
+            meta[key] = [];
+            activeListKey = key;
+            return;
+        }
+
+        const trimmed = rawValue.trim();
+        const quotedMatch = trimmed.match(/^"(.*)"$/);
+        meta[key] = quotedMatch ? quotedMatch[1] : trimmed;
+    });
+
+    return { meta, body };
+};
+
+const formatInlineMarkdown = (text) => {
+    let escaped = escapeHtml(text);
+    escaped = escaped.replace(
+        /\[([^\]]+)\]\((https?:\/\/[^\s)]+|\/[^\s)]+)\)/g,
+        '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>',
+    );
+    escaped = escaped.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+    escaped = escaped.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+    return escaped;
+};
+
+const renderMarkdown = (markdown) => {
+    const source = String(markdown || "").replace(/\r\n/g, "\n");
+    if (!source.trim()) {
+        return "";
+    }
+
+    const lines = source.split("\n");
+    const html = [];
+    let paragraphBuffer = [];
+    let listType = null;
+    let codeBuffer = [];
+    let inCodeBlock = false;
+
+    const flushParagraph = () => {
+        if (!paragraphBuffer.length) {
+            return;
+        }
+        html.push(`<p>${formatInlineMarkdown(paragraphBuffer.join(" "))}</p>`);
+        paragraphBuffer = [];
+    };
+
+    const closeList = () => {
+        if (!listType) {
+            return;
+        }
+        html.push(`</${listType}>`);
+        listType = null;
+    };
+
+    const flushCodeBlock = () => {
+        if (!inCodeBlock) {
+            return;
+        }
+        html.push(`<pre><code>${escapeHtml(codeBuffer.join("\n"))}</code></pre>`);
+        codeBuffer = [];
+        inCodeBlock = false;
+    };
+
+    lines.forEach((line) => {
+        const trimmed = line.trim();
+
+        if (trimmed.startsWith("```")) {
+            if (inCodeBlock) {
+                flushCodeBlock();
+            } else {
+                flushParagraph();
+                closeList();
+                inCodeBlock = true;
+            }
+            return;
+        }
+
+        if (inCodeBlock) {
+            codeBuffer.push(line);
+            return;
+        }
+
+        if (!trimmed) {
+            flushParagraph();
+            closeList();
+            return;
+        }
+
+        const h2 = trimmed.match(/^##\s+(.*)$/);
+        if (h2) {
+            flushParagraph();
+            closeList();
+            html.push(`<h2>${formatInlineMarkdown(h2[1])}</h2>`);
+            return;
+        }
+
+        const h3 = trimmed.match(/^###\s+(.*)$/);
+        if (h3) {
+            flushParagraph();
+            closeList();
+            html.push(`<h3>${formatInlineMarkdown(h3[1])}</h3>`);
+            return;
+        }
+
+        const ul = trimmed.match(/^-\s+(.*)$/);
+        if (ul) {
+            flushParagraph();
+            if (listType !== "ul") {
+                closeList();
+                listType = "ul";
+                html.push("<ul>");
+            }
+            html.push(`<li>${formatInlineMarkdown(ul[1])}</li>`);
+            return;
+        }
+
+        const ol = trimmed.match(/^\d+\.\s+(.*)$/);
+        if (ol) {
+            flushParagraph();
+            if (listType !== "ol") {
+                closeList();
+                listType = "ol";
+                html.push("<ol>");
+            }
+            html.push(`<li>${formatInlineMarkdown(ol[1])}</li>`);
+            return;
+        }
+
+        paragraphBuffer.push(trimmed);
+    });
+
+    flushParagraph();
+    closeList();
+    flushCodeBlock();
+
+    return html.join("\n");
+};
+
+const stripMarkdown = (markdown) =>
+    String(markdown || "")
+        .replace(/```[\s\S]*?```/g, " ")
+        .replace(/`([^`]+)`/g, "$1")
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, "$1")
+        .replace(/[#>*_\-]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
 
 const baseHead = ({
     title,
@@ -253,6 +436,13 @@ const renderCaseDetail = ({
             </figure>`
         : "";
 
+    const contentHtml = renderMarkdown(card.bodyMarkdown);
+    const contentMarkup = contentHtml
+        ? `<section class="case-content sharp-card p-5 mt-5">
+${contentHtml}
+                </section>`
+        : "";
+
     const previousMarkup = previousCard
         ? `<a class="button ghost-button is-small" href="../${escapeHtml(previousCard.slug)}/">이전 사례</a>`
         : "";
@@ -275,6 +465,7 @@ const renderCaseDetail = ({
         image: imagePath,
         keywords: (card.tags || []).join(", "),
         articleSection: card.category,
+        articleBody: stripMarkdown(card.bodyMarkdown),
         about: [
             {
                 "@type": "Thing",
@@ -330,9 +521,10 @@ const renderCaseDetail = ({
                     </article>
                     <article class="sharp-card p-5">
                         <h2 class="title is-5">성과</h2>
-                        <p class="muted">${escapeHtml(card.outcome || card.result || "정리된 내용이 없습니다.")}</p>
+                        <p class="muted">${escapeHtml(card.outcome || "정리된 내용이 없습니다.")}</p>
                     </article>
                 </section>
+                ${contentMarkup}
                 <div class="case-detail-nav mt-5">
                     <a class="button cta-button is-small" href="/cases/">목록으로</a>
                     <div class="case-detail-nav__side">
@@ -406,10 +598,7 @@ const renderSitemap = ({ siteUrl, cards }) => {
 
     const body = urls
         .map(
-            (item) => `  <url>
-    <loc>${escapeXml(item.loc)}</loc>
-    <lastmod>${escapeXml(item.lastmod)}</lastmod>
-  </url>`,
+            (item) => `  <url>\n    <loc>${escapeXml(item.loc)}</loc>\n    <lastmod>${escapeXml(item.lastmod)}</lastmod>\n  </url>`,
         )
         .join("\n");
 
@@ -426,12 +615,13 @@ const renderRss = ({ siteName, siteUrl, cards }) => {
         .slice(0, 50)
         .map((card) => {
             const link = `${siteUrl}/cases/${card.slug}/`;
+            const description = card.description || stripMarkdown(card.bodyMarkdown);
             return `<item>
       <title>${escapeXml(card.title)}</title>
       <link>${escapeXml(link)}</link>
       <guid>${escapeXml(link)}</guid>
       <pubDate>${new Date(toIsoDate(card.date)).toUTCString()}</pubDate>
-      <description>${escapeXml(stripHtml(card.description))}</description>
+      <description>${escapeXml(description)}</description>
     </item>`;
         })
         .join("\n");
@@ -449,37 +639,87 @@ ${items}
 `;
 };
 
-const normalizeCards = (rawCards) => {
+const normalizeCard = (card, index) => {
+    const fallbackSlug = card.fileSlug || `case-${index + 1}`;
+    const slug = String(card.slug || fallbackSlug).trim();
+    if (!slug) {
+        throw new Error(`invalid slug at index ${index}`);
+    }
+
+    const tags = Array.isArray(card.tags)
+        ? card.tags.map((tag) => String(tag || "").trim()).filter(Boolean)
+        : [];
+
+    return {
+        ...card,
+        slug,
+        title: String(card.title || "").trim(),
+        date: String(card.date || "").trim(),
+        category: String(card.category || "기타").trim(),
+        description: String(card.description || "").trim(),
+        challenge: String(card.challenge || "").trim(),
+        approach: String(card.approach || "").trim(),
+        outcome: String(card.outcome || card.result || "").trim(),
+        image: String(card.image || "").trim(),
+        imageAlt: String(card.imageAlt || "").trim(),
+        tags,
+        bodyMarkdown: String(card.bodyMarkdown || "").trim(),
+    };
+};
+
+const loadCardsFromMarkdown = async () => {
+    let entries;
+    try {
+        entries = await fs.readdir(casesDataDir, { withFileTypes: true });
+    } catch (error) {
+        throw new Error(`missing cases-data directory: ${casesDataDir}`);
+    }
+
+    const markdownFiles = entries
+        .filter((entry) => {
+            if (!entry.isFile()) {
+                return false;
+            }
+            if (!entry.name.endsWith(".md")) {
+                return false;
+            }
+            if (entry.name === "README.md") {
+                return false;
+            }
+            if (entry.name.startsWith("_")) {
+                return false;
+            }
+            return true;
+        })
+        .map((entry) => entry.name)
+        .sort();
+
+    if (!markdownFiles.length) {
+        throw new Error("no markdown files found in cases-data");
+    }
+
+    const rawCards = await Promise.all(
+        markdownFiles.map(async (fileName) => {
+            const filePath = path.join(casesDataDir, fileName);
+            const text = await fs.readFile(filePath, "utf8");
+            const { meta, body } = parseFrontmatter(text);
+            const fileSlug = path.basename(fileName, ".md");
+            return {
+                ...meta,
+                fileSlug,
+                bodyMarkdown: body,
+            };
+        }),
+    );
+
+    const normalized = rawCards.map((card, index) => normalizeCard(card, index));
+
     const seen = new Set();
-    const normalized = rawCards.map((card, index) => {
-        const fallbackSlug = `case-${index + 1}`;
-        const slug = String(card.slug || fallbackSlug).trim();
-        if (!slug) {
-            throw new Error(`invalid slug at index ${index}`);
+    normalized.forEach((card) => {
+        if (seen.has(card.slug)) {
+            throw new Error(`duplicate slug: ${card.slug}`);
         }
-        if (seen.has(slug)) {
-            throw new Error(`duplicate slug: ${slug}`);
-        }
-        seen.add(slug);
-
-        const tags = Array.isArray(card.tags)
-            ? card.tags
-                  .map((tag) => String(tag || "").trim())
-                  .filter(Boolean)
-            : [];
-
-        return {
-            ...card,
-            slug,
-            title: String(card.title || "").trim(),
-            date: String(card.date || "").trim(),
-            category: String(card.category || "기타").trim(),
-            description: String(card.description || "").trim(),
-            challenge: String(card.challenge || "").trim(),
-            approach: String(card.approach || "").trim(),
-            outcome: String(card.outcome || card.result || "").trim(),
-            tags,
-        };
+        seen.add(card.slug);
     });
 
     normalized.sort((a, b) => {
@@ -494,10 +734,32 @@ const normalizeCards = (rawCards) => {
         if (dateB) {
             return 1;
         }
-        return 0;
+        return a.slug.localeCompare(b.slug);
     });
 
     return normalized;
+};
+
+const writeLegacyJson = async (cards) => {
+    const legacyCards = cards.map((card, index) => ({
+        slug: card.slug,
+        title: card.title,
+        date: card.date,
+        category: card.category,
+        description: card.description,
+        challenge: card.challenge,
+        approach: card.approach,
+        outcome: card.outcome,
+        image: card.image,
+        imageAlt: card.imageAlt,
+        tags: card.tags,
+        delay: Number((0.05 * (index + 1)).toFixed(2)),
+    }));
+
+    await writeFile(
+        legacyJsonFile,
+        `${JSON.stringify({ cards: legacyCards }, null, 4)}\n`,
+    );
 };
 
 const readConfig = async () => {
@@ -518,9 +780,7 @@ const readConfig = async () => {
 
 const main = async () => {
     const config = await readConfig();
-    const dataText = await fs.readFile(dataFile, "utf8");
-    const json = JSON.parse(dataText);
-    const cards = normalizeCards(Array.isArray(json.cards) ? json.cards : []);
+    const cards = await loadCardsFromMarkdown();
 
     await ensureDir(casesDir);
 
@@ -542,10 +802,7 @@ const main = async () => {
             previousCard,
             nextCard,
         });
-        await writeFile(
-            path.join(casesDir, card.slug, "index.html"),
-            detailHtml,
-        );
+        await writeFile(path.join(casesDir, card.slug, "index.html"), detailHtml);
     }
 
     const previewHtml = renderHomeCasesPreview(cards);
@@ -571,8 +828,10 @@ Sitemap: ${config.siteUrl}/sitemap.xml
 `;
     await writeFile(path.join(rootDir, "robots.txt"), robotsTxt);
 
+    await writeLegacyJson(cards);
+
     process.stdout.write(
-        `generated ${cards.length} cases, sitemap.xml, robots.txt\n`,
+        `generated ${cards.length} cases from markdown, sitemap.xml, robots.txt\n`,
     );
 };
 
