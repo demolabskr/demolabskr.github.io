@@ -378,19 +378,7 @@ const renderCasesIndex = ({ siteName, siteUrl, cards }) => {
         <script type="application/ld+json">${safeJsonForScript(jsonLd)}</script>
     </head>
     <body class="cases-page">
-        <nav class="navbar case-nav" role="navigation" aria-label="main navigation">
-            <div class="container">
-                <div class="navbar-brand">
-                    <a class="navbar-item brand" href="/">${escapeHtml(siteName)}</a>
-                </div>
-                <div class="navbar-menu is-active">
-                    <div class="navbar-end">
-                        <a class="navbar-item" href="/">홈</a>
-                        <a class="navbar-item is-active" href="/cases/">사례</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        <div data-include="../partials/site-navbar.html"></div>
         <main class="section">
             <div class="container">
                 <p class="eyebrow">Cases</p>
@@ -401,12 +389,14 @@ ${listItems}
                 </div>
             </div>
         </main>
-        <footer class="footer">
-            <div class="content has-text-centered">
-                <p class="brand">${escapeHtml(siteName)}</p>
-                <p class="muted">Cases Archive</p>
-            </div>
-        </footer>
+        <div data-include="../partials/site-footer.html"></div>
+        <button id="scrollTopBtn" class="scroll-top" type="button">
+            TOP
+        </button>
+        <div class="scroll-progress" aria-hidden="true">
+            <div id="scrollProgress" class="scroll-progress__bar"></div>
+        </div>
+        <script src="../js/main.js"></script>
     </body>
 </html>
 `;
@@ -486,19 +476,7 @@ ${contentHtml}
         <script type="application/ld+json">${safeJsonForScript(jsonLd)}</script>
     </head>
     <body class="case-page">
-        <nav class="navbar case-nav" role="navigation" aria-label="main navigation">
-            <div class="container">
-                <div class="navbar-brand">
-                    <a class="navbar-item brand" href="/">${escapeHtml(siteName)}</a>
-                </div>
-                <div class="navbar-menu is-active">
-                    <div class="navbar-end">
-                        <a class="navbar-item" href="/">홈</a>
-                        <a class="navbar-item" href="/cases/">사례</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        <div data-include="../../partials/site-navbar.html"></div>
         <main class="section">
             <div class="container">
                 <p class="case-breadcrumb"><a href="/cases/">사례 아카이브</a> / ${escapeHtml(card.title)}</p>
@@ -534,12 +512,14 @@ ${contentHtml}
                 </div>
             </div>
         </main>
-        <footer class="footer">
-            <div class="content has-text-centered">
-                <p class="brand">${escapeHtml(siteName)}</p>
-                <p class="muted">Case Detail</p>
-            </div>
-        </footer>
+        <div data-include="../../partials/site-footer.html"></div>
+        <button id="scrollTopBtn" class="scroll-top" type="button">
+            TOP
+        </button>
+        <div class="scroll-progress" aria-hidden="true">
+            <div id="scrollProgress" class="scroll-progress__bar"></div>
+        </div>
+        <script src="../../js/main.js"></script>
     </body>
 </html>
 `;

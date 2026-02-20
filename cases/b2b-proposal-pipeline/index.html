@@ -31,19 +31,7 @@
         <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"B2B 제안서 파이프라인","description":"영업 제안서의 작성-검토-발송 흐름을 표준화해 반복 가능하게 만든 사례입니다.","datePublished":"2025-12-03T00:00:00.000Z","dateModified":"2025-12-03T00:00:00.000Z","mainEntityOfPage":"https://demolabskr.github.io/cases/b2b-proposal-pipeline/","author":{"@type":"Organization","name":"DemoLabs"},"image":"https://demolabskr.github.io/images/aidemolabs-cover.png","keywords":"B2B, 표준화, 문서 시스템","articleSection":"세일즈","articleBody":"배경 제안서 제작이 개인 역량에 의존해 반복 가능한 파이프라인이 없었습니다. 검토자마다 피드백 기준이 달라 재작업이 자주 발생했습니다. 실행 제안서 기본 골격과 필수 입력 항목을 템플릿으로 고정했습니다. 검토 단계를 역할별 체크리스트로 분리했습니다. 버전별 변경 이력을 남겨 어떤 수정이 성과로 이어졌는지 추적했습니다. 운영 포인트 B2B 문서는 설득력 이전에 일관성이 필요합니다. 일관성이 있어야 학습 데이터가 누적됩니다.","about":[{"@type":"Thing","name":"세일즈"}]}</script>
     </head>
     <body class="case-page">
-        <nav class="navbar case-nav" role="navigation" aria-label="main navigation">
-            <div class="container">
-                <div class="navbar-brand">
-                    <a class="navbar-item brand" href="/">DemoLabs</a>
-                </div>
-                <div class="navbar-menu is-active">
-                    <div class="navbar-end">
-                        <a class="navbar-item" href="/">홈</a>
-                        <a class="navbar-item" href="/cases/">사례</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        <div data-include="../../partials/site-navbar.html"></div>
         <main class="section">
             <div class="container">
                 <p class="case-breadcrumb"><a href="/cases/">사례 아카이브</a> / B2B 제안서 파이프라인</p>
@@ -90,11 +78,13 @@
                 </div>
             </div>
         </main>
-        <footer class="footer">
-            <div class="content has-text-centered">
-                <p class="brand">DemoLabs</p>
-                <p class="muted">Case Detail</p>
-            </div>
-        </footer>
+        <div data-include="../../partials/site-footer.html"></div>
+        <button id="scrollTopBtn" class="scroll-top" type="button">
+            TOP
+        </button>
+        <div class="scroll-progress" aria-hidden="true">
+            <div id="scrollProgress" class="scroll-progress__bar"></div>
+        </div>
+        <script src="../../js/main.js"></script>
     </body>
 </html>

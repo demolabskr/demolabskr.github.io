@@ -1296,10 +1296,10 @@ const initModuleIndicatorClicks = () => {
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
+    await loadSections();
     initThemeToggle();
     initNavMenu();
     initScrollUI();
-    await loadSections();
     await renderCaseStudies();
     initCaseImagePreview();
     initCaseIndicatorClicks();

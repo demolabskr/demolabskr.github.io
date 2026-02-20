@@ -31,19 +31,7 @@
         <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"운동·학습 앱","description":"리텐션을 높이기 위해 게이미피케이션과 코호트 분석 구조를 함께 설계한 사례입니다.","datePublished":"2026-01-05T00:00:00.000Z","dateModified":"2026-01-05T00:00:00.000Z","mainEntityOfPage":"https://demolabskr.github.io/cases/habit-app-retention/","author":{"@type":"Organization","name":"DemoLabs"},"image":"https://demolabskr.github.io/sections/case-studies/case-studies-001.png","keywords":"리텐션, 게이미피케이션, 실험 설계","articleSection":"앱","articleBody":"배경 핵심 기능의 체감 가치가 생기기 전에 사용자가 이탈하고 있었습니다. 첫 주 행동 데이터를 기준으로 어떤 구간에서 동기가 꺾이는지 확인해야 했습니다. 실행 연속 사용 기록이 끊기기 직전 알림 트리거를 추가했습니다. 행동 난이도에 따라 레벨 상승 보상을 다르게 배치했습니다. 코호트별로 실험군을 나눠 보상 정책을 주 단위로 검증했습니다. 운영 포인트 리텐션 개선은 기능 추가보다 반복 루프 설계가 핵심입니다. 루프가 있어야 실험이 빠르게 수렴합니다.","about":[{"@type":"Thing","name":"앱"}]}</script>
     </head>
     <body class="case-page">
-        <nav class="navbar case-nav" role="navigation" aria-label="main navigation">
-            <div class="container">
-                <div class="navbar-brand">
-                    <a class="navbar-item brand" href="/">DemoLabs</a>
-                </div>
-                <div class="navbar-menu is-active">
-                    <div class="navbar-end">
-                        <a class="navbar-item" href="/">홈</a>
-                        <a class="navbar-item" href="/cases/">사례</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        <div data-include="../../partials/site-navbar.html"></div>
         <main class="section">
             <div class="container">
                 <p class="case-breadcrumb"><a href="/cases/">사례 아카이브</a> / 운동·학습 앱</p>
@@ -92,11 +80,13 @@
                 </div>
             </div>
         </main>
-        <footer class="footer">
-            <div class="content has-text-centered">
-                <p class="brand">DemoLabs</p>
-                <p class="muted">Case Detail</p>
-            </div>
-        </footer>
+        <div data-include="../../partials/site-footer.html"></div>
+        <button id="scrollTopBtn" class="scroll-top" type="button">
+            TOP
+        </button>
+        <div class="scroll-progress" aria-hidden="true">
+            <div id="scrollProgress" class="scroll-progress__bar"></div>
+        </div>
+        <script src="../../js/main.js"></script>
     </body>
 </html>

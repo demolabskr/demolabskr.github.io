@@ -31,19 +31,7 @@
         <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"온보딩 여정 재설계","description":"신규 사용자의 첫 주 행동 데이터를 기반으로 온보딩 순서를 다시 설계한 사례입니다.","datePublished":"2025-11-15T00:00:00.000Z","dateModified":"2025-11-15T00:00:00.000Z","mainEntityOfPage":"https://demolabskr.github.io/cases/onboarding-journey-redesign/","author":{"@type":"Organization","name":"DemoLabs"},"image":"https://demolabskr.github.io/images/aidemolabs-cover.png","keywords":"온보딩, 전환, 퍼널","articleSection":"제품","articleBody":"배경 사용자는 회원가입 이후 첫 10분 안에 제품 가치를 경험하지 못하고 이탈했습니다. 온보딩 화면은 많았지만 실제 행동 데이터와 연결된 설계가 부족했습니다. 실행 가입 직후 핵심 가치 체험까지의 클릭 수를 최소화했습니다. 이탈 가능성이 높은 행동 패턴에 맞춘 가이드 메시지를 분기했습니다. 전환 퍼널을 단계별로 계측해 주간 단위 개선 실험을 반복했습니다. 운영 포인트 온보딩은 소개 화면이 아니라 가치 전달 경로입니다. 경로가 짧고 명확할수록 전환 실험이 빨라집니다.","about":[{"@type":"Thing","name":"제품"}]}</script>
     </head>
     <body class="case-page">
-        <nav class="navbar case-nav" role="navigation" aria-label="main navigation">
-            <div class="container">
-                <div class="navbar-brand">
-                    <a class="navbar-item brand" href="/">DemoLabs</a>
-                </div>
-                <div class="navbar-menu is-active">
-                    <div class="navbar-end">
-                        <a class="navbar-item" href="/">홈</a>
-                        <a class="navbar-item" href="/cases/">사례</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        <div data-include="../../partials/site-navbar.html"></div>
         <main class="section">
             <div class="container">
                 <p class="case-breadcrumb"><a href="/cases/">사례 아카이브</a> / 온보딩 여정 재설계</p>
@@ -90,11 +78,13 @@
                 </div>
             </div>
         </main>
-        <footer class="footer">
-            <div class="content has-text-centered">
-                <p class="brand">DemoLabs</p>
-                <p class="muted">Case Detail</p>
-            </div>
-        </footer>
+        <div data-include="../../partials/site-footer.html"></div>
+        <button id="scrollTopBtn" class="scroll-top" type="button">
+            TOP
+        </button>
+        <div class="scroll-progress" aria-hidden="true">
+            <div id="scrollProgress" class="scroll-progress__bar"></div>
+        </div>
+        <script src="../../js/main.js"></script>
     </body>
 </html>

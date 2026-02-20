@@ -31,19 +31,7 @@
         <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"사례 아카이브","description":"문제 정의, 접근, 성과를 구조화한 사례 아카이브입니다.","url":"https://demolabskr.github.io/cases/","mainEntity":{"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"url":"https://demolabskr.github.io/cases/electronic-contract-system/","name":"전자계약 시스템"},{"@type":"ListItem","position":2,"url":"https://demolabskr.github.io/cases/commerce-retention-data/","name":"쇼핑몰 데이터 구조"},{"@type":"ListItem","position":3,"url":"https://demolabskr.github.io/cases/habit-app-retention/","name":"운동·학습 앱"},{"@type":"ListItem","position":4,"url":"https://demolabskr.github.io/cases/cs-automation-handoff/","name":"고객응대 자동화 체계"},{"@type":"ListItem","position":5,"url":"https://demolabskr.github.io/cases/b2b-proposal-pipeline/","name":"B2B 제안서 파이프라인"},{"@type":"ListItem","position":6,"url":"https://demolabskr.github.io/cases/onboarding-journey-redesign/","name":"온보딩 여정 재설계"}]}}</script>
     </head>
     <body class="cases-page">
-        <nav class="navbar case-nav" role="navigation" aria-label="main navigation">
-            <div class="container">
-                <div class="navbar-brand">
-                    <a class="navbar-item brand" href="/">DemoLabs</a>
-                </div>
-                <div class="navbar-menu is-active">
-                    <div class="navbar-end">
-                        <a class="navbar-item" href="/">홈</a>
-                        <a class="navbar-item is-active" href="/cases/">사례</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        <div data-include="../partials/site-navbar.html"></div>
         <main class="section">
             <div class="container">
                 <p class="eyebrow">Cases</p>
@@ -107,11 +95,13 @@
                 </div>
             </div>
         </main>
-        <footer class="footer">
-            <div class="content has-text-centered">
-                <p class="brand">DemoLabs</p>
-                <p class="muted">Cases Archive</p>
-            </div>
-        </footer>
+        <div data-include="../partials/site-footer.html"></div>
+        <button id="scrollTopBtn" class="scroll-top" type="button">
+            TOP
+        </button>
+        <div class="scroll-progress" aria-hidden="true">
+            <div id="scrollProgress" class="scroll-progress__bar"></div>
+        </div>
+        <script src="../js/main.js"></script>
     </body>
 </html>

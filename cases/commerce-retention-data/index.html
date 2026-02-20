@@ -31,19 +31,7 @@
         <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"쇼핑몰 데이터 구조","description":"결제 연동보다 재구매율에 직접 영향을 주는 데이터 모델과 혜택 구조를 먼저 정리한 사례입니다.","datePublished":"2026-01-20T00:00:00.000Z","dateModified":"2026-01-20T00:00:00.000Z","mainEntityOfPage":"https://demolabskr.github.io/cases/commerce-retention-data/","author":{"@type":"Organization","name":"DemoLabs"},"image":"https://demolabskr.github.io/sections/case-studies/case-studies-001.png","keywords":"재구매, 데이터모델, 코호트","articleSection":"커머스","articleBody":"배경 신규 유입은 충분했지만 반복 구매로 이어지는 경로가 보이지 않았습니다. 팀은 마케팅 이벤트를 늘렸지만, 어떤 고객군에서 효과가 있는지 확인하기 어려웠습니다. 실행 고객, 주문, 혜택 테이블을 재구매 분석 중심으로 재정의했습니다. 구매 주기별 세그먼트를 기준으로 자동 혜택 조건을 설계했습니다. 캠페인 성과를 즉시 비교할 수 있도록 대시보드 지표를 통일했습니다. 운영 포인트 재구매 전략은 광고보다 데이터 기준점이 먼저입니다. 기준점이 없으면 실험이 누적되지 않습니다.","about":[{"@type":"Thing","name":"커머스"}]}</script>
     </head>
     <body class="case-page">
-        <nav class="navbar case-nav" role="navigation" aria-label="main navigation">
-            <div class="container">
-                <div class="navbar-brand">
-                    <a class="navbar-item brand" href="/">DemoLabs</a>
-                </div>
-                <div class="navbar-menu is-active">
-                    <div class="navbar-end">
-                        <a class="navbar-item" href="/">홈</a>
-                        <a class="navbar-item" href="/cases/">사례</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        <div data-include="../../partials/site-navbar.html"></div>
         <main class="section">
             <div class="container">
                 <p class="case-breadcrumb"><a href="/cases/">사례 아카이브</a> / 쇼핑몰 데이터 구조</p>
@@ -92,11 +80,13 @@
                 </div>
             </div>
         </main>
-        <footer class="footer">
-            <div class="content has-text-centered">
-                <p class="brand">DemoLabs</p>
-                <p class="muted">Case Detail</p>
-            </div>
-        </footer>
+        <div data-include="../../partials/site-footer.html"></div>
+        <button id="scrollTopBtn" class="scroll-top" type="button">
+            TOP
+        </button>
+        <div class="scroll-progress" aria-hidden="true">
+            <div id="scrollProgress" class="scroll-progress__bar"></div>
+        </div>
+        <script src="../../js/main.js"></script>
     </body>
 </html>

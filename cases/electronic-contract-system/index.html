@@ -31,19 +31,7 @@
         <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"전자계약 시스템","description":"법적 리스크와 운영 부담을 줄이기 위해 증빙·로그·감사 흐름을 먼저 설계한 사례입니다.","datePublished":"2026-02-01T00:00:00.000Z","dateModified":"2026-02-01T00:00:00.000Z","mainEntityOfPage":"https://demolabskr.github.io/cases/electronic-contract-system/","author":{"@type":"Organization","name":"DemoLabs"},"image":"https://demolabskr.github.io/sections/case-studies/case-studies-001.png","keywords":"감사로그, 리스크 관리, 업무 자동화","articleSection":"플랫폼","articleBody":"배경 계약 업무는 처리 속도보다 분쟁 시점의 검증 가능성이 더 중요했습니다. 초기에는 업무 담당자마다 승인 경로가 달라 같은 계약도 이력이 다르게 남았습니다. 실행 계약 단계별 승인 상태를 하나의 타임라인으로 통합했습니다. 전자서명 완료 이벤트를 기준으로 보관 정책이 자동 적용되게 했습니다. 감사 요청이 들어오면 로그를 즉시 재현할 수 있도록 조회 화면을 분리했습니다. 운영 포인트 기능을 먼저 늘리기보다, 추적 가능한 흐름을 먼저 고정한 뒤 기능을 붙여야 운영 리스크를 줄일 수 있습니다.","about":[{"@type":"Thing","name":"플랫폼"}]}</script>
     </head>
     <body class="case-page">
-        <nav class="navbar case-nav" role="navigation" aria-label="main navigation">
-            <div class="container">
-                <div class="navbar-brand">
-                    <a class="navbar-item brand" href="/">DemoLabs</a>
-                </div>
-                <div class="navbar-menu is-active">
-                    <div class="navbar-end">
-                        <a class="navbar-item" href="/">홈</a>
-                        <a class="navbar-item" href="/cases/">사례</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        <div data-include="../../partials/site-navbar.html"></div>
         <main class="section">
             <div class="container">
                 <p class="case-breadcrumb"><a href="/cases/">사례 아카이브</a> / 전자계약 시스템</p>
@@ -92,11 +80,13 @@
                 </div>
             </div>
         </main>
-        <footer class="footer">
-            <div class="content has-text-centered">
-                <p class="brand">DemoLabs</p>
-                <p class="muted">Case Detail</p>
-            </div>
-        </footer>
+        <div data-include="../../partials/site-footer.html"></div>
+        <button id="scrollTopBtn" class="scroll-top" type="button">
+            TOP
+        </button>
+        <div class="scroll-progress" aria-hidden="true">
+            <div id="scrollProgress" class="scroll-progress__bar"></div>
+        </div>
+        <script src="../../js/main.js"></script>
     </body>
 </html>

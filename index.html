@@ -40,82 +40,7 @@
         <link rel="stylesheet" href="css/styles.css" />
     </head>
     <body>
-        <nav
-            class="navbar is-fixed-top"
-            role="navigation"
-            aria-label="main navigation"
-        >
-            <div class="navbar-brand">
-                <a class="navbar-item brand" href="/"> DemoLabs </a>
-                <a
-                    role="button"
-                    class="navbar-burger"
-                    aria-label="menu"
-                    aria-expanded="false"
-                    data-target="navMenu"
-                >
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                </a>
-            </div>
-
-            <div id="navMenu" class="navbar-menu">
-                <div class="navbar-end">
-                    <a class="navbar-item" href="#hero">홈</a>
-                    <a class="navbar-item" href="#problem">문제</a>
-                    <a class="navbar-item" href="#solution">해결</a>
-                    <a class="navbar-item" href="#strengths">강점</a>
-                    <a class="navbar-item" href="#process">프로세스</a>
-                    <a class="navbar-item" href="#pricing">가격</a>
-                    <a class="navbar-item" href="#faq">FAQ</a>
-                    <a class="navbar-item" href="/cases/">사례</a>
-                    <div class="navbar-item">
-                        <button
-                            id="themeToggle"
-                            class="button ghost-button is-small"
-                            type="button"
-                            aria-label="다크 모드로 전환"
-                        >
-                            <svg
-                                class="icon-sun"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                aria-hidden="true"
-                            >
-                                <circle cx="12" cy="12" r="5"></circle>
-                                <line x1="12" y1="1" x2="12" y2="3"></line>
-                                <line x1="12" y1="21" x2="12" y2="23"></line>
-                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                                <line x1="1" y1="12" x2="3" y2="12"></line>
-                                <line x1="21" y1="12" x2="23" y2="12"></line>
-                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                            </svg>
-                            <svg
-                                class="icon-moon"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                aria-hidden="true"
-                            >
-                                <path
-                                    d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"
-                                ></path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        <div data-include="partials/site-navbar.html"></div>
 
         <div data-include="sections/hero.html"></div>
         <div data-include="sections/problem.html"></div>
@@ -134,12 +59,7 @@
         <div data-include="docs/case-detail-modal.html"></div>
         <div data-include="docs/case-image-modal.html"></div>
 
-        <footer class="footer">
-            <div class="content has-text-centered">
-                <p class="brand">DemoLabs</p>
-                <p class="muted">CTO-as-a-Service</p>
-            </div>
-        </footer>
+        <div data-include="partials/site-footer.html"></div>
 
         <button id="scrollTopBtn" class="scroll-top" type="button">
             TOP

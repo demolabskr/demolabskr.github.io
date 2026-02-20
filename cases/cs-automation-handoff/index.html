@@ -31,19 +31,7 @@
         <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"고객응대 자동화 체계","description":"문의 분류와 담당자 핸드오프를 자동화해 운영 부하를 줄인 사례입니다.","datePublished":"2025-12-18T00:00:00.000Z","dateModified":"2025-12-18T00:00:00.000Z","mainEntityOfPage":"https://demolabskr.github.io/cases/cs-automation-handoff/","author":{"@type":"Organization","name":"DemoLabs"},"image":"https://demolabskr.github.io/sections/case-studies/case-studies-001.png","keywords":"CS, 워크플로우, 자동화","articleSection":"운영","articleBody":"배경 문의량이 늘어날수록 사람이 병목이 되는 구조였습니다. 동일한 이슈를 여러 채널에서 동시에 대응하면서 품질 편차가 커졌습니다. 실행 문의 유입 지점을 통합하고 유형 코드를 표준화했습니다. 긴급도와 영향도를 반영한 우선순위 점수를 자동 계산했습니다. 점수와 담당 도메인에 따라 티켓이 자동 할당되도록 구성했습니다. 운영 포인트 CS 자동화의 핵심은 답변 템플릿이 아니라 라우팅 기준입니다. 기준이 명확해야 누락이 줄어듭니다.","about":[{"@type":"Thing","name":"운영"}]}</script>
     </head>
     <body class="case-page">
-        <nav class="navbar case-nav" role="navigation" aria-label="main navigation">
-            <div class="container">
-                <div class="navbar-brand">
-                    <a class="navbar-item brand" href="/">DemoLabs</a>
-                </div>
-                <div class="navbar-menu is-active">
-                    <div class="navbar-end">
-                        <a class="navbar-item" href="/">홈</a>
-                        <a class="navbar-item" href="/cases/">사례</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        <div data-include="../../partials/site-navbar.html"></div>
         <main class="section">
             <div class="container">
                 <p class="case-breadcrumb"><a href="/cases/">사례 아카이브</a> / 고객응대 자동화 체계</p>
@@ -92,11 +80,13 @@
                 </div>
             </div>
         </main>
-        <footer class="footer">
-            <div class="content has-text-centered">
-                <p class="brand">DemoLabs</p>
-                <p class="muted">Case Detail</p>
-            </div>
-        </footer>
+        <div data-include="../../partials/site-footer.html"></div>
+        <button id="scrollTopBtn" class="scroll-top" type="button">
+            TOP
+        </button>
+        <div class="scroll-progress" aria-hidden="true">
+            <div id="scrollProgress" class="scroll-progress__bar"></div>
+        </div>
+        <script src="../../js/main.js"></script>
     </body>
 </html>
