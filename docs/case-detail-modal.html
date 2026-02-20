@@ -1,0 +1,50 @@
+<div id="modal-case-detail" class="modal" aria-hidden="true">
+    <div class="modal__overlay" data-modal-close></div>
+    <div class="modal__card">
+        <div class="modal__header">
+            <div>
+                <p class="eyebrow">Case Detail</p>
+                <h3 class="title is-4" data-case-detail-title>
+                    사례 요약
+                </h3>
+                <p class="muted" data-case-detail-meta></p>
+            </div>
+            <button
+                class="modal__close"
+                type="button"
+                data-modal-close
+                aria-label="닫기"
+            >
+                &times;
+            </button>
+        </div>
+        <div class="modal__body">
+            <p class="muted" data-case-detail-summary></p>
+            <div class="modal__grid case-detail-grid mt-5">
+                <article class="sharp-card p-4">
+                    <h4 class="title is-6">문제</h4>
+                    <p class="muted" data-case-detail-challenge></p>
+                </article>
+                <article class="sharp-card p-4">
+                    <h4 class="title is-6">접근</h4>
+                    <p class="muted" data-case-detail-approach></p>
+                </article>
+                <article class="sharp-card p-4">
+                    <h4 class="title is-6">성과</h4>
+                    <p class="muted" data-case-detail-outcome></p>
+                </article>
+            </div>
+            <div class="case-detail-actions mt-5">
+                <div class="case-tag-list" data-case-detail-tags></div>
+                <button
+                    type="button"
+                    class="button ghost-button is-small"
+                    data-case-detail-image
+                    hidden
+                >
+                    이미지 보기
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

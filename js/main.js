@@ -276,59 +276,327 @@ const setActiveCaseIndicator = (index) => {
 };
 
 const buildCaseCard = (card) => {
-    const wrapper = document.createElement("div");
-    wrapper.className = "case-card";
-
-    const cardEl = document.createElement("div");
-    cardEl.className = "sharp-card p-5 reveal";
+    const cardEl = document.createElement("article");
+    cardEl.className = "sharp-card p-5 reveal case-entry";
     const delay = typeof card.delay === "number" ? card.delay : 0;
     cardEl.style.setProperty("--delay", `${delay}s`);
+
+    const meta = document.createElement("p");
+    meta.className = "case-entry__meta";
+    const dateText = formatCaseDate(card.date);
+    const categoryText = card.category || "기타";
+    meta.textContent = `${dateText} · ${categoryText}`;
 
     const title = document.createElement("h3");
     title.className = "title is-5";
     title.textContent = card.title || "";
 
-    const row = document.createElement("div");
-    row.className = "case-card__row";
-
     const description = document.createElement("p");
-    description.className = "muted case-card__text";
+    description.className = "muted case-entry__text";
     description.textContent = card.description || "";
-    row.appendChild(description);
+
+    const outcome = document.createElement("p");
+    outcome.className = "muted case-entry__outcome";
+    outcome.textContent = card.outcome || card.result || "";
+
+    const footer = document.createElement("div");
+    footer.className = "case-entry__footer";
+
+    const tags = document.createElement("div");
+    tags.className = "case-tag-list";
+    (Array.isArray(card.tags) ? card.tags : []).forEach((tag) => {
+        const tagEl = document.createElement("span");
+        tagEl.className = "tag is-outline";
+        tagEl.textContent = tag;
+        tags.appendChild(tagEl);
+    });
+
+    const actions = document.createElement("div");
+    actions.className = "case-entry__actions";
+
+    const detailButton = document.createElement("button");
+    detailButton.className = "button ghost-button is-small";
+    detailButton.type = "button";
+    detailButton.textContent = "요약 보기";
+    detailButton.setAttribute("data-case-open", card.slug || "");
+    actions.appendChild(detailButton);
 
     if (card.image) {
-        const thumbButton = document.createElement("button");
-        thumbButton.className = "case-card__thumb-btn";
-        thumbButton.type = "button";
-        thumbButton.setAttribute("data-case-image", card.image);
-        thumbButton.setAttribute(
+        const imageButton = document.createElement("button");
+        imageButton.className = "button ghost-button is-small";
+        imageButton.type = "button";
+        imageButton.textContent = "이미지";
+        imageButton.setAttribute("data-case-image", card.image);
+        imageButton.setAttribute(
             "data-case-alt",
             card.imageAlt || "케이스 스터디 이미지",
         );
-        thumbButton.setAttribute("aria-label", "케이스 스터디 이미지 보기");
-
-        const thumb = document.createElement("img");
-        thumb.src = card.image;
-        thumb.alt = card.imageAlt || "케이스 스터디 이미지";
-        thumbButton.appendChild(thumb);
-        row.appendChild(thumbButton);
+        imageButton.setAttribute("aria-label", "케이스 스터디 이미지 보기");
+        actions.appendChild(imageButton);
     }
 
+    footer.appendChild(tags);
+    footer.appendChild(actions);
+
+    cardEl.appendChild(meta);
     cardEl.appendChild(title);
-    cardEl.appendChild(row);
+    cardEl.appendChild(description);
+    cardEl.appendChild(outcome);
+    cardEl.appendChild(footer);
 
-    if (card.result) {
-        const divider = document.createElement("div");
-        divider.className = "divider";
-        const result = document.createElement("p");
-        result.className = "muted";
-        result.textContent = card.result;
-        cardEl.appendChild(divider);
-        cardEl.appendChild(result);
+    return cardEl;
+};
+
+const caseArchiveState = {
+    cards: [],
+    activeFilter: "all",
+};
+
+const parseCaseDate = (value) => {
+    if (!value) {
+        return null;
+    }
+    const parsed = new Date(value);
+    if (Number.isNaN(parsed.getTime())) {
+        return null;
+    }
+    return parsed;
+};
+
+const formatCaseDate = (value) => {
+    const date = parseCaseDate(value);
+    if (!date) {
+        return "날짜 미정";
+    }
+    return new Intl.DateTimeFormat("ko-KR", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+    }).format(date);
+};
+
+const normalizeCaseCards = (cards) => {
+    const normalized = cards.map((card, index) => ({
+        ...card,
+        slug:
+            typeof card.slug === "string" && card.slug.trim()
+                ? card.slug.trim()
+                : `case-${index + 1}`,
+        category:
+            typeof card.category === "string" && card.category.trim()
+                ? card.category.trim()
+                : "기타",
+        tags: Array.isArray(card.tags)
+            ? card.tags
+                  .map((tag) =>
+                      typeof tag === "string" ? tag.trim() : "",
+                  )
+                  .filter(Boolean)
+            : [],
+    }));
+
+    normalized.sort((a, b) => {
+        const dateA = parseCaseDate(a.date);
+        const dateB = parseCaseDate(b.date);
+        if (dateA && dateB) {
+            return dateB.getTime() - dateA.getTime();
+        }
+        if (dateA) {
+            return -1;
+        }
+        if (dateB) {
+            return 1;
+        }
+        return 0;
+    });
+
+    return normalized;
+};
+
+const renderCaseFeature = (card) => {
+    const container = document.querySelector("[data-case-feature]");
+    if (!container) {
+        return;
+    }
+    container.innerHTML = "";
+
+    if (!card) {
+        container.hidden = true;
+        return;
+    }
+    container.hidden = false;
+
+    const eyebrow = document.createElement("p");
+    eyebrow.className = "eyebrow";
+    eyebrow.textContent = "Featured Case";
+
+    const title = document.createElement("h3");
+    title.className = "title is-5";
+    title.textContent = card.title || "";
+
+    const meta = document.createElement("p");
+    meta.className = "muted";
+    meta.textContent = `${formatCaseDate(card.date)} · ${card.category || "기타"}`;
+
+    const summary = document.createElement("p");
+    summary.className = "muted";
+    summary.textContent = card.description || "";
+
+    const actions = document.createElement("div");
+    actions.className = "case-entry__actions mt-4";
+
+    const detailButton = document.createElement("button");
+    detailButton.className = "button cta-button is-small";
+    detailButton.type = "button";
+    detailButton.textContent = "핵심 보기";
+    detailButton.setAttribute("data-case-open", card.slug || "");
+    actions.appendChild(detailButton);
+
+    container.appendChild(eyebrow);
+    container.appendChild(title);
+    container.appendChild(meta);
+    container.appendChild(summary);
+    container.appendChild(actions);
+};
+
+const renderCaseFilters = () => {
+    const container = document.querySelector("[data-case-filters]");
+    if (!container) {
+        return;
+    }
+    container.innerHTML = "";
+
+    const counts = new Map();
+    caseArchiveState.cards.forEach((card) => {
+        const category = card.category || "기타";
+        counts.set(category, (counts.get(category) || 0) + 1);
+    });
+
+    const filters = [
+        {
+            key: "all",
+            label: "전체",
+            count: caseArchiveState.cards.length,
+        },
+        ...Array.from(counts.entries()).map(([category, count]) => ({
+            key: category,
+            label: category,
+            count,
+        })),
+    ];
+
+    filters.forEach((filter) => {
+        const button = document.createElement("button");
+        button.className = "case-filter-btn";
+        if (caseArchiveState.activeFilter === filter.key) {
+            button.classList.add("is-active");
+        }
+        button.type = "button";
+        button.setAttribute("data-case-filter", filter.key);
+
+        const label = document.createElement("span");
+        label.textContent = filter.label;
+
+        const count = document.createElement("span");
+        count.className = "case-filter-btn__count";
+        count.textContent = String(filter.count);
+
+        button.appendChild(label);
+        button.appendChild(count);
+        container.appendChild(button);
+    });
+};
+
+const renderCaseEntries = () => {
+    const container = document.querySelector("[data-case-list]");
+    if (!container) {
+        return;
+    }
+    container.innerHTML = "";
+
+    const visibleCards =
+        caseArchiveState.activeFilter === "all"
+            ? caseArchiveState.cards
+            : caseArchiveState.cards.filter(
+                  (card) => card.category === caseArchiveState.activeFilter,
+              );
+
+    if (!visibleCards.length) {
+        const empty = document.createElement("p");
+        empty.className = "muted case-empty";
+        empty.textContent = "선택한 조건의 사례가 없습니다.";
+        container.appendChild(empty);
+        renderCaseFeature(caseArchiveState.cards[0] || null);
+        return;
     }
 
-    wrapper.appendChild(cardEl);
-    return wrapper;
+    visibleCards.forEach((card) => {
+        container.appendChild(buildCaseCard(card));
+    });
+    renderCaseFeature(visibleCards[0]);
+};
+
+const renderCaseDetail = (card) => {
+    const modal = document.getElementById("modal-case-detail");
+    if (!modal || !card) {
+        return;
+    }
+
+    const title = modal.querySelector("[data-case-detail-title]");
+    const meta = modal.querySelector("[data-case-detail-meta]");
+    const summary = modal.querySelector("[data-case-detail-summary]");
+    const challenge = modal.querySelector("[data-case-detail-challenge]");
+    const approach = modal.querySelector("[data-case-detail-approach]");
+    const outcome = modal.querySelector("[data-case-detail-outcome]");
+    const tags = modal.querySelector("[data-case-detail-tags]");
+    const imageButton = modal.querySelector("[data-case-detail-image]");
+
+    if (title) {
+        title.textContent = card.title || "";
+    }
+    if (meta) {
+        meta.textContent = `${formatCaseDate(card.date)} · ${card.category || "기타"}`;
+    }
+    if (summary) {
+        summary.textContent = card.description || "";
+    }
+    if (challenge) {
+        challenge.textContent = card.challenge || "정리된 내용이 없습니다.";
+    }
+    if (approach) {
+        approach.textContent = card.approach || "정리된 내용이 없습니다.";
+    }
+    if (outcome) {
+        outcome.textContent =
+            card.outcome || card.result || "정리된 내용이 없습니다.";
+    }
+
+    if (tags) {
+        tags.innerHTML = "";
+        (Array.isArray(card.tags) ? card.tags : []).forEach((tag) => {
+            const tagEl = document.createElement("span");
+            tagEl.className = "tag is-outline";
+            tagEl.textContent = tag;
+            tags.appendChild(tagEl);
+        });
+    }
+
+    if (imageButton instanceof HTMLElement) {
+        if (card.image) {
+            imageButton.hidden = false;
+            imageButton.setAttribute("data-case-image", card.image);
+            imageButton.setAttribute(
+                "data-case-alt",
+                card.imageAlt || "케이스 스터디 이미지",
+            );
+        } else {
+            imageButton.hidden = true;
+            imageButton.removeAttribute("data-case-image");
+            imageButton.removeAttribute("data-case-alt");
+        }
+    }
+
+    setModalState(modal, true);
 };
 
 const buildModuleCard = (card) => {
@@ -378,7 +646,7 @@ const buildModuleCard = (card) => {
 };
 
 const renderCaseStudies = async () => {
-    const container = document.querySelector('[data-cards="case-studies"]');
+    const container = document.querySelector("[data-case-list]");
     if (!container) {
         return;
     }
@@ -387,26 +655,19 @@ const renderCaseStudies = async () => {
         const data = await fetchJson(
             "sections/case-studies/case-studies.json",
         );
-        const cards = Array.isArray(data.cards) ? data.cards : [];
-        container.innerHTML = "";
+        const cards = normalizeCaseCards(
+            Array.isArray(data.cards) ? data.cards : [],
+        );
 
-        caseCarouselState.total = cards.length;
-        caseCarouselState.index = 0;
-        renderCaseIndicators(cards.length);
-        setActiveCaseIndicator(0);
-
-        const builtCards = cards.map((card) => buildCaseCard(card));
-        builtCards.forEach((cardEl) => container.appendChild(cardEl));
-
-        builtCards.forEach((cardEl) => {
-            const clone = cardEl.cloneNode(true);
-            container.appendChild(clone);
-        });
+        caseArchiveState.cards = cards;
+        caseArchiveState.activeFilter = "all";
+        renderCaseFilters();
+        renderCaseEntries();
     } catch (error) {
         container.innerHTML = "";
         const message = document.createElement("p");
         message.className = "muted";
-        message.textContent = "케이스 스터디를 불러오지 못했습니다.";
+        message.textContent = "사례 데이터를 불러오지 못했습니다.";
         container.appendChild(message);
     }
 };
@@ -649,20 +910,44 @@ const jumpCaseToIndex = (targetIndex) => {
 };
 
 const initCaseIndicatorClicks = () => {
-    const container = document.querySelector("[data-case-indicators]");
-    if (!container) {
+    const filters = document.querySelector("[data-case-filters]");
+    if (filters instanceof HTMLElement && !filters.dataset.bound) {
+        filters.dataset.bound = "true";
+        filters.addEventListener("click", (event) => {
+            const target = event.target.closest("[data-case-filter]");
+            if (!(target instanceof HTMLElement)) {
+                return;
+            }
+            const nextFilter = target.getAttribute("data-case-filter");
+            if (!nextFilter || caseArchiveState.activeFilter === nextFilter) {
+                return;
+            }
+            caseArchiveState.activeFilter = nextFilter;
+            renderCaseFilters();
+            renderCaseEntries();
+        });
+    }
+
+    if (document.body.dataset.caseDetailBound === "true") {
         return;
     }
-    container.addEventListener("click", (event) => {
-        const target = event.target.closest(".case-indicator");
-        if (!target) {
+    document.body.dataset.caseDetailBound = "true";
+    document.addEventListener("click", (event) => {
+        const target = event.target.closest("[data-case-open]");
+        if (!(target instanceof HTMLElement)) {
             return;
         }
-        const index = Number(target.dataset.index);
-        if (Number.isNaN(index)) {
+        const slug = target.getAttribute("data-case-open");
+        if (!slug) {
             return;
         }
-        jumpCaseToIndex(index);
+        const selected = caseArchiveState.cards.find(
+            (card) => card.slug === slug,
+        );
+        if (!selected) {
+            return;
+        }
+        renderCaseDetail(selected);
     });
 };
 
@@ -1016,7 +1301,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     initScrollUI();
     await loadSections();
     await renderCaseStudies();
-    initCaseCarousel();
     initCaseImagePreview();
     initCaseIndicatorClicks();
     await renderModules();

@@ -1,10 +1,30 @@
 <section id="cases" class="section">
-            <div class="container">
-                <p class="eyebrow">Case Studies</p>
-                <h2 class="title is-3">나열이 아닌, 문제 해결 기록</h2>
-                <div class="case-carousel">
-                    <div class="case-track" data-cards="case-studies"></div>
-                </div>
-                <div class="case-indicators" data-case-indicators></div>
+    <div class="container">
+        <p class="eyebrow">Cases</p>
+        <h2 class="title is-3">사례 아카이브</h2>
+        <p class="muted">
+            하나의 사례를 하나의 기록으로 남기는 구조입니다. 최신 사례부터
+            빠르게 탐색하고, 필요한 항목만 상세로 열어볼 수 있습니다.
+        </p>
+        <div class="cases-shell">
+            <aside class="sharp-card p-5 cases-sidebar">
+                <h3 class="title is-6">탐색</h3>
+                <div class="cases-filter-list" data-case-filters></div>
+                <div class="divider"></div>
+                <p class="cases-sidebar__label">운영 방식</p>
+                <ul class="cases-sidebar__meta">
+                    <li>정적 JSON 기반 렌더링</li>
+                    <li>카테고리 필터 중심 탐색</li>
+                    <li>요약/상세 분리</li>
+                </ul>
+            </aside>
+            <div class="cases-main">
+                <article
+                    class="sharp-card p-5 reveal cases-feature"
+                    data-case-feature
+                ></article>
+                <div class="cases-list" data-case-list></div>
             </div>
-        </section>
+        </div>
+    </div>
+</section>
