@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>쇼핑몰 데이터 구조 | 사례 | DemoLabs</title>
+        <link rel="icon" href="../../images/favicon.png" type="image/png" />
+        <meta name="description" content="결제 연동보다 재구매율에 직접 영향을 주는 데이터 모델과 혜택 구조를 먼저 정리한 사례입니다." />
+        <meta name="robots" content="index,follow" />
+        <meta property="og:type" content="article" />
+        <meta property="og:locale" content="ko_KR" />
+        <meta property="og:title" content="쇼핑몰 데이터 구조 | 사례 | DemoLabs" />
+        <meta property="og:description" content="결제 연동보다 재구매율에 직접 영향을 주는 데이터 모델과 혜택 구조를 먼저 정리한 사례입니다." />
+        <meta property="og:url" content="https://demolabskr.github.io/cases/commerce-retention-data/" />
+        <meta property="og:image" content="https://demolabskr.github.io/sections/case-studies/case-studies-001.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="쇼핑몰 데이터 구조 | 사례 | DemoLabs" />
+        <meta name="twitter:description" content="결제 연동보다 재구매율에 직접 영향을 주는 데이터 모델과 혜택 구조를 먼저 정리한 사례입니다." />
+        <meta name="twitter:image" content="https://demolabskr.github.io/sections/case-studies/case-studies-001.png" />
+        <link rel="canonical" href="https://demolabskr.github.io/cases/commerce-retention-data/" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        />
+
+        <link rel="stylesheet" href="../../css/styles.css" />
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"쇼핑몰 데이터 구조","description":"결제 연동보다 재구매율에 직접 영향을 주는 데이터 모델과 혜택 구조를 먼저 정리한 사례입니다.","datePublished":"2026-01-20T00:00:00.000Z","dateModified":"2026-01-20T00:00:00.000Z","mainEntityOfPage":"https://demolabskr.github.io/cases/commerce-retention-data/","author":{"@type":"Organization","name":"DemoLabs"},"image":"https://demolabskr.github.io/sections/case-studies/case-studies-001.png","keywords":"재구매, 데이터모델, 코호트","articleSection":"커머스","about":[{"@type":"Thing","name":"커머스"}]}</script>
+    </head>
+    <body class="case-page">
+        <nav class="navbar case-nav" role="navigation" aria-label="main navigation">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a class="navbar-item brand" href="/">DemoLabs</a>
+                </div>
+                <div class="navbar-menu is-active">
+                    <div class="navbar-end">
+                        <a class="navbar-item" href="/">홈</a>
+                        <a class="navbar-item" href="/cases/">사례</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <main class="section">
+            <div class="container">
+                <p class="case-breadcrumb"><a href="/cases/">사례 아카이브</a> / 쇼핑몰 데이터 구조</p>
+                <header class="case-page-header">
+                    <p class="eyebrow">Case</p>
+                    <h1 class="title is-2">쇼핑몰 데이터 구조</h1>
+                    <p class="muted">2026. 01. 20. · 커머스</p>
+                    <p class="muted mt-3">결제 연동보다 재구매율에 직접 영향을 주는 데이터 모델과 혜택 구조를 먼저 정리한 사례입니다.</p>
+                    <div class="case-tag-list mt-4"><span class="tag is-outline">재구매</span><span class="tag is-outline">데이터모델</span><span class="tag is-outline">코호트</span></div>
+                </header>
+                <figure class="case-detail-image sharp-card p-4 mt-5">
+                <img src="../../sections/case-studies/case-studies-001.png" alt="쇼핑몰 데이터 구조 케이스 스터디 이미지" loading="lazy" />
+            </figure>
+                <section class="case-detail-grid mt-5">
+                    <article class="sharp-card p-5">
+                        <h2 class="title is-5">문제</h2>
+                        <p class="muted">매출 데이터는 쌓였지만 고객의 반복 구매 패턴을 읽을 수 없어 프로모션 효율이 낮았습니다.</p>
+                    </article>
+                    <article class="sharp-card p-5">
+                        <h2 class="title is-5">접근</h2>
+                        <p class="muted">상품군, 구매 주기, 혜택 반응을 한 화면에서 볼 수 있는 코호트 기준 스키마를 먼저 설계했습니다.</p>
+                    </article>
+                    <article class="sharp-card p-5">
+                        <h2 class="title is-5">성과</h2>
+                        <p class="muted">재구매를 유도하는 시점 기반 혜택 자동화가 가능해졌고 운영 판단 속도가 개선됐습니다.</p>
+                    </article>
+                </section>
+                <div class="case-detail-nav mt-5">
+                    <a class="button cta-button is-small" href="/cases/">목록으로</a>
+                    <div class="case-detail-nav__side">
+                        <a class="button ghost-button is-small" href="../electronic-contract-system/">이전 사례</a>
+                        <a class="button ghost-button is-small" href="../habit-app-retention/">다음 사례</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <div class="content has-text-centered">
+                <p class="brand">DemoLabs</p>
+                <p class="muted">Case Detail</p>
+            </div>
+        </footer>
+    </body>
+</html>

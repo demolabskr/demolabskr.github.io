@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>DemoLabs Cases</title>
+    <link>https://demolabskr.github.io/cases/</link>
+    <description>DemoLabs 사례 아카이브 피드</description>
+    <lastBuildDate>Fri, 20 Feb 2026 01:53:22 GMT</lastBuildDate>
+<item>
+      <title>전자계약 시스템</title>
+      <link>https://demolabskr.github.io/cases/electronic-contract-system/</link>
+      <guid>https://demolabskr.github.io/cases/electronic-contract-system/</guid>
+      <pubDate>Sun, 01 Feb 2026 00:00:00 GMT</pubDate>
+      <description>법적 리스크와 운영 부담을 줄이기 위해 증빙·로그·감사 흐름을 먼저 설계한 사례입니다.</description>
+    </item>
+<item>
+      <title>쇼핑몰 데이터 구조</title>
+      <link>https://demolabskr.github.io/cases/commerce-retention-data/</link>
+      <guid>https://demolabskr.github.io/cases/commerce-retention-data/</guid>
+      <pubDate>Tue, 20 Jan 2026 00:00:00 GMT</pubDate>
+      <description>결제 연동보다 재구매율에 직접 영향을 주는 데이터 모델과 혜택 구조를 먼저 정리한 사례입니다.</description>
+    </item>
+<item>
+      <title>운동·학습 앱</title>
+      <link>https://demolabskr.github.io/cases/habit-app-retention/</link>
+      <guid>https://demolabskr.github.io/cases/habit-app-retention/</guid>
+      <pubDate>Mon, 05 Jan 2026 00:00:00 GMT</pubDate>
+      <description>리텐션을 높이기 위해 게이미피케이션과 코호트 분석 구조를 함께 설계한 사례입니다.</description>
+    </item>
+<item>
+      <title>고객응대 자동화 체계</title>
+      <link>https://demolabskr.github.io/cases/cs-automation-handoff/</link>
+      <guid>https://demolabskr.github.io/cases/cs-automation-handoff/</guid>
+      <pubDate>Thu, 18 Dec 2025 00:00:00 GMT</pubDate>
+      <description>문의 분류와 담당자 핸드오프를 자동화해 운영 부하를 줄인 사례입니다.</description>
+    </item>
+<item>
+      <title>B2B 제안서 파이프라인</title>
+      <link>https://demolabskr.github.io/cases/b2b-proposal-pipeline/</link>
+      <guid>https://demolabskr.github.io/cases/b2b-proposal-pipeline/</guid>
+      <pubDate>Wed, 03 Dec 2025 00:00:00 GMT</pubDate>
+      <description>영업 제안서의 작성-검토-발송 흐름을 표준화해 반복 가능하게 만든 사례입니다.</description>
+    </item>
+<item>
+      <title>온보딩 여정 재설계</title>
+      <link>https://demolabskr.github.io/cases/onboarding-journey-redesign/</link>
+      <guid>https://demolabskr.github.io/cases/onboarding-journey-redesign/</guid>
+      <pubDate>Sat, 15 Nov 2025 00:00:00 GMT</pubDate>
+      <description>신규 사용자의 첫 주 행동 데이터를 기반으로 온보딩 순서를 다시 설계한 사례입니다.</description>
+    </item>
+  </channel>
+</rss>

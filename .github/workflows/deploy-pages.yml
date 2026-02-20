@@ -21,6 +21,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Generate cases pages
+        run: node scripts/generate-cases.js
       - name: Prepare site
         run: |
           mkdir -p _site
