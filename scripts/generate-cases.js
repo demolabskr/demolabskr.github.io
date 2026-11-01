@@ -374,7 +374,7 @@ const renderCasesIndex = ({ siteName, siteUrl, cards }) => {
         ogImage,
         assetPrefix: "../",
     })}
-        <link rel="stylesheet" href="../css/styles.css" />
+        <link rel="stylesheet" href="../css/styles.css?v=20261101" />
         <script type="application/ld+json">${safeJsonForScript(jsonLd)}</script>
     </head>
     <body class="cases-page">
@@ -383,7 +383,7 @@ const renderCasesIndex = ({ siteName, siteUrl, cards }) => {
             <div class="container">
                 <p class="eyebrow">Cases</p>
                 <h1 class="title is-2">사례 아카이브</h1>
-                <p class="muted">정적 문서처럼 관리되는 사례 모음입니다. 최신 순으로 정렬됩니다.</p>
+                <p class="muted">서비스의 문제를 분석하고, 사용자 경험과 운영 구조를 설계한 사례를 모았습니다.</p>
                 <div class="case-list-grid mt-5">
 ${listItems}
                 </div>
@@ -396,7 +396,7 @@ ${listItems}
         <div class="scroll-progress" aria-hidden="true">
             <div id="scrollProgress" class="scroll-progress__bar"></div>
         </div>
-        <script src="../js/main.js"></script>
+        <script src="../js/main.js?v=20261101"></script>
     </body>
 </html>
 `;
@@ -472,7 +472,7 @@ ${contentHtml}
         ogType: "article",
         assetPrefix: "../../",
     })}
-        <link rel="stylesheet" href="../../css/styles.css" />
+        <link rel="stylesheet" href="../../css/styles.css?v=20261101" />
         <script type="application/ld+json">${safeJsonForScript(jsonLd)}</script>
     </head>
     <body class="case-page">
@@ -519,7 +519,7 @@ ${contentHtml}
         <div class="scroll-progress" aria-hidden="true">
             <div id="scrollProgress" class="scroll-progress__bar"></div>
         </div>
-        <script src="../../js/main.js"></script>
+        <script src="../../js/main.js?v=20261101"></script>
     </body>
 </html>
 `;
@@ -549,10 +549,10 @@ const renderHomeCasesPreview = (cards) => {
     return `<section id="cases" class="section">
     <div class="container">
         <p class="eyebrow">Cases</p>
-        <h2 class="title is-3">사례 확장 아카이브</h2>
+        <h2 class="title is-3">기획과 구현을 연결한 사례</h2>
         <p class="muted">
-            사례를 개별 URL 문서로 확장해 검색 유입과 내부 링크 구조를 강화했습니다.
-            아래 최신 사례에서 시작하거나 전체 아카이브로 이동할 수 있습니다.
+            사용자의 문제를 정의하고 서비스 구조와 운영 방식을 설계한 사례입니다.
+            각 사례에서 문제와 접근 방식, 개선 방향을 살펴보세요.
         </p>
         <div class="columns mt-5 is-multiline">
 ${cardMarkup}

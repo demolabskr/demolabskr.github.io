@@ -10,7 +10,7 @@ const loadSections = async () => {
                 return;
             }
             try {
-                const response = await fetch(url);
+                const response = await fetch(url, { cache: "no-cache" });
                 if (!response.ok) {
                     throw new Error("Failed to load section");
                 }
@@ -70,9 +70,17 @@ const initNavMenu = () => {
         return;
     }
 
+    const setExpanded = (expanded) => {
+        burger.classList.toggle("is-active", expanded);
+        menu.classList.toggle("is-active", expanded);
+        burger.setAttribute("aria-expanded", String(expanded));
+        burger.setAttribute("aria-label", expanded ? "메뉴 닫기" : "메뉴 열기");
+    };
     burger.addEventListener("click", () => {
-        burger.classList.toggle("is-active");
-        menu.classList.toggle("is-active");
+        setExpanded(!menu.classList.contains("is-active"));
+    });
+    menu.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => setExpanded(false));
     });
 };
 
@@ -1297,6 +1305,10 @@ const initModuleIndicatorClicks = () => {
 
 document.addEventListener("DOMContentLoaded", async () => {
     await loadSections();
+    const hashTarget = document.getElementById(window.location.hash.slice(1));
+    if (hashTarget) {
+        hashTarget.scrollIntoView({ behavior: "instant" });
+    }
     initThemeToggle();
     initNavMenu();
     initScrollUI();
