@@ -516,17 +516,6 @@ strong {
     padding-top: 0.75rem;
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .auto-slider__viewport {
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-    }
-
-    .auto-slider__item {
-        scroll-snap-align: start;
-    }
-}
-
 @media screen and (max-width: 1023px) {
     .auto-slider__item {
         flex-basis: calc((100% - var(--slider-gap)) / 2);

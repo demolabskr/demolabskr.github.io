@@ -1314,7 +1314,6 @@ const initAutoSlider = (slider) => {
         return;
     }
 
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let timer = null;
     let isAnimating = false;
     let isHovered = false;
@@ -1325,7 +1324,6 @@ const initAutoSlider = (slider) => {
     const isOverflowing = () => track.scrollWidth > track.clientWidth + 1;
 
     const canPlay = () =>
-        !reduceMotion.matches &&
         !isUserPaused &&
         !isHovered &&
         !isFocused &&
@@ -1354,7 +1352,7 @@ const initAutoSlider = (slider) => {
     const update = () => {
         const overflowing = isOverflowing();
         if (toggle) {
-            toggle.hidden = reduceMotion.matches || !overflowing;
+            toggle.hidden = !overflowing;
         }
         if (canPlay()) {
             if (!timer) {
@@ -1416,9 +1414,6 @@ const initAutoSlider = (slider) => {
     }
 
     document.addEventListener("visibilitychange", update);
-    if (reduceMotion.addEventListener) {
-        reduceMotion.addEventListener("change", update);
-    }
     window.addEventListener("resize", update);
     update();
 };
