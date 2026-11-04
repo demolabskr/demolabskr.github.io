@@ -396,7 +396,7 @@ ${listItems}
         <div class="scroll-progress" aria-hidden="true">
             <div id="scrollProgress" class="scroll-progress__bar"></div>
         </div>
-        <script src="../js/main.js?v=20261104"></script>
+        <script src="../js/main.js?v=20261104b"></script>
     </body>
 </html>
 `;
@@ -519,7 +519,7 @@ ${contentHtml}
         <div class="scroll-progress" aria-hidden="true">
             <div id="scrollProgress" class="scroll-progress__bar"></div>
         </div>
-        <script src="../../js/main.js?v=20261104"></script>
+        <script src="../../js/main.js?v=20261104b"></script>
     </body>
 </html>
 `;

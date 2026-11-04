@@ -1374,8 +1374,16 @@ const initAutoSlider = (slider) => {
         isHovered = false;
         update();
     });
+    const isKeyboardFocus = (element) => {
+        try {
+            return element.matches(":focus-visible");
+        } catch (error) {
+            return false;
+        }
+    };
+
     slider.addEventListener("focusin", (event) => {
-        if (event.target === toggle) {
+        if (event.target === toggle || !isKeyboardFocus(event.target)) {
             return;
         }
         isFocused = true;
@@ -1408,7 +1416,9 @@ const initAutoSlider = (slider) => {
     }
 
     document.addEventListener("visibilitychange", update);
-    reduceMotion.addEventListener("change", update);
+    if (reduceMotion.addEventListener) {
+        reduceMotion.addEventListener("change", update);
+    }
     window.addEventListener("resize", update);
     update();
 };
