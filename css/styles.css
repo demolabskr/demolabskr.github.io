@@ -335,7 +335,10 @@ strong {
     padding-top: 1rem;
 }
 
-.expertise-link:hover .title,
+.expertise-link:hover .title {
+    color: var(--accent-2);
+}
+
 .expertise-number {
     display: block;
     color: var(--muted);
