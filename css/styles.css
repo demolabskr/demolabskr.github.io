@@ -402,6 +402,61 @@ strong {
     text-underline-offset: 0.25em;
 }
 
+.book-card {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    padding: 1.5rem;
+}
+
+.book-card__cover {
+    flex: 0 0 180px;
+    display: block;
+    border: 2px solid var(--border);
+    line-height: 0;
+}
+
+.book-card__cover img {
+    width: 100%;
+    height: auto;
+}
+
+.book-card__body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+}
+
+.book-card__body .title {
+    margin-bottom: 0.25rem;
+}
+
+.book-card__subtitle {
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.book-card .card-note {
+    padding-top: 1rem;
+}
+
+.book-card .course-link {
+    padding-top: 0.75rem;
+}
+
+@media screen and (max-width: 768px) {
+    .book-card {
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+
+    .book-card__cover {
+        flex-basis: auto;
+        width: 140px;
+    }
+}
+
 .contact-actions {
     display: flex;
     align-items: flex-start;

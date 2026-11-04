@@ -374,7 +374,7 @@ const renderCasesIndex = ({ siteName, siteUrl, cards }) => {
         ogImage,
         assetPrefix: "../",
     })}
-        <link rel="stylesheet" href="../css/styles.css?v=20261101" />
+        <link rel="stylesheet" href="../css/styles.css?v=20261104" />
         <script type="application/ld+json">${safeJsonForScript(jsonLd)}</script>
     </head>
     <body class="cases-page">
@@ -472,7 +472,7 @@ ${contentHtml}
         ogType: "article",
         assetPrefix: "../../",
     })}
-        <link rel="stylesheet" href="../../css/styles.css?v=20261101" />
+        <link rel="stylesheet" href="../../css/styles.css?v=20261104" />
         <script type="application/ld+json">${safeJsonForScript(jsonLd)}</script>
     </head>
     <body class="case-page">
