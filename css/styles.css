@@ -610,10 +610,6 @@ button:focus-visible {
         background: transparent;
         border: 0;
     }
-
-    .navbar-end .navbar-item::after {
-        content: none;
-    }
 }
 
 @media screen and (max-width: 768px) {
@@ -751,17 +747,26 @@ button:focus-visible {
     color: var(--accent-2);
 }
 
-.navbar-end .navbar-item::after {
-    content: "|";
-    margin: 0 0.6rem;
-    color: var(--border);
-    opacity: 0.5;
-    pointer-events: none;
-}
+@media screen and (min-width: 1024px) {
+    .navbar-end .navbar-item {
+        position: relative;
+    }
 
-.navbar-end .navbar-item:last-child::after {
-    content: "";
-    margin: 0;
+    .navbar-end .navbar-item:not(:last-child) {
+        margin-right: 1.2rem;
+    }
+
+    /* 구분선은 링크 바깥 간격에 둬서 호버·클릭 영역에 포함되지 않게 한다 */
+    .navbar-end .navbar-item:not(:last-child)::after {
+        content: "|";
+        position: absolute;
+        top: 50%;
+        right: -0.6rem;
+        transform: translate(50%, -50%);
+        color: var(--border);
+        opacity: 0.5;
+        pointer-events: none;
+    }
 }
 
 .footer {
