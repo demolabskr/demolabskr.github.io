@@ -23,6 +23,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Generate cases pages
         run: node scripts/generate-cases.js
+      - name: Apply hash-based cache busting
+        run: node scripts/cache-bust.js
       - name: Prepare site
         run: |
           mkdir -p _site
