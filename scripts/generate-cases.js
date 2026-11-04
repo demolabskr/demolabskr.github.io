@@ -374,7 +374,7 @@ const renderCasesIndex = ({ siteName, siteUrl, cards }) => {
         ogImage,
         assetPrefix: "../",
     })}
-        <link rel="stylesheet" href="../css/styles.css?v=20261104" />
+        <link rel="stylesheet" href="../css/styles.css?v=20261104b" />
         <script type="application/ld+json">${safeJsonForScript(jsonLd)}</script>
     </head>
     <body class="cases-page">
@@ -396,7 +396,7 @@ ${listItems}
         <div class="scroll-progress" aria-hidden="true">
             <div id="scrollProgress" class="scroll-progress__bar"></div>
         </div>
-        <script src="../js/main.js?v=20261101"></script>
+        <script src="../js/main.js?v=20261104"></script>
     </body>
 </html>
 `;
@@ -472,7 +472,7 @@ ${contentHtml}
         ogType: "article",
         assetPrefix: "../../",
     })}
-        <link rel="stylesheet" href="../../css/styles.css?v=20261104" />
+        <link rel="stylesheet" href="../../css/styles.css?v=20261104b" />
         <script type="application/ld+json">${safeJsonForScript(jsonLd)}</script>
     </head>
     <body class="case-page">
@@ -519,7 +519,7 @@ ${contentHtml}
         <div class="scroll-progress" aria-hidden="true">
             <div id="scrollProgress" class="scroll-progress__bar"></div>
         </div>
-        <script src="../../js/main.js?v=20261101"></script>
+        <script src="../../js/main.js?v=20261104"></script>
     </body>
 </html>
 `;

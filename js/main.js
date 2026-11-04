@@ -1303,6 +1303,120 @@ const initModuleIndicatorClicks = () => {
     });
 };
 
+const AUTO_SLIDER_INTERVAL = 3500;
+const AUTO_SLIDER_DURATION = 600;
+
+const initAutoSlider = (slider) => {
+    const viewport = slider.querySelector(".auto-slider__viewport");
+    const track = slider.querySelector(".auto-slider__track");
+    const toggle = slider.querySelector(".auto-slider__toggle");
+    if (!viewport || !track) {
+        return;
+    }
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let timer = null;
+    let isAnimating = false;
+    let isHovered = false;
+    let isFocused = false;
+    let isVisible = true;
+    let isUserPaused = false;
+
+    const isOverflowing = () => track.scrollWidth > track.clientWidth + 1;
+
+    const canPlay = () =>
+        !reduceMotion.matches &&
+        !isUserPaused &&
+        !isHovered &&
+        !isFocused &&
+        isVisible &&
+        !document.hidden &&
+        isOverflowing();
+
+    const slideNext = () => {
+        const first = track.firstElementChild;
+        if (!first || isAnimating || !canPlay()) {
+            return;
+        }
+        const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+        const distance = first.getBoundingClientRect().width + gap;
+        isAnimating = true;
+        track.style.transition = `transform ${AUTO_SLIDER_DURATION}ms ease`;
+        track.style.transform = `translateX(${-distance}px)`;
+        window.setTimeout(() => {
+            track.style.transition = "none";
+            track.appendChild(first);
+            track.style.transform = "translateX(0)";
+            isAnimating = false;
+        }, AUTO_SLIDER_DURATION);
+    };
+
+    const update = () => {
+        const overflowing = isOverflowing();
+        if (toggle) {
+            toggle.hidden = reduceMotion.matches || !overflowing;
+        }
+        if (canPlay()) {
+            if (!timer) {
+                timer = window.setInterval(slideNext, AUTO_SLIDER_INTERVAL);
+            }
+        } else if (timer) {
+            window.clearInterval(timer);
+            timer = null;
+        }
+    };
+
+    slider.addEventListener("mouseenter", () => {
+        isHovered = true;
+        update();
+    });
+    slider.addEventListener("mouseleave", () => {
+        isHovered = false;
+        update();
+    });
+    slider.addEventListener("focusin", (event) => {
+        if (event.target === toggle) {
+            return;
+        }
+        isFocused = true;
+        update();
+    });
+    slider.addEventListener("focusout", (event) => {
+        if (slider.contains(event.relatedTarget) && event.relatedTarget !== toggle) {
+            return;
+        }
+        isFocused = false;
+        update();
+    });
+
+    if (toggle) {
+        toggle.addEventListener("click", () => {
+            isUserPaused = !isUserPaused;
+            const label = isUserPaused ? "자동 넘김 재생" : "자동 넘김 정지";
+            toggle.classList.toggle("is-paused", isUserPaused);
+            toggle.setAttribute("aria-label", label);
+            toggle.setAttribute("title", label);
+            update();
+        });
+    }
+
+    if ("IntersectionObserver" in window) {
+        new IntersectionObserver((entries) => {
+            isVisible = entries.some((entry) => entry.isIntersecting);
+            update();
+        }).observe(slider);
+    }
+
+    document.addEventListener("visibilitychange", update);
+    reduceMotion.addEventListener("change", update);
+    window.addEventListener("resize", update);
+    update();
+};
+
+const initAutoSliders = () => {
+    document.querySelectorAll("[data-auto-slider]").forEach(initAutoSlider);
+};
+
 document.addEventListener("DOMContentLoaded", async () => {
     await loadSections();
     const hashTarget = document.getElementById(window.location.hash.slice(1));
@@ -1312,6 +1426,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     initThemeToggle();
     initNavMenu();
     initScrollUI();
+    initAutoSliders();
     await renderCaseStudies();
     initCaseImagePreview();
     initCaseIndicatorClicks();
