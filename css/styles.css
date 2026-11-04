@@ -336,10 +336,6 @@ strong {
 }
 
 .expertise-link:hover .title,
-.course-link:hover {
-    color: var(--accent-2);
-}
-
 .expertise-number {
     display: block;
     color: var(--muted);
@@ -405,16 +401,6 @@ strong {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-}
-
-.course-link {
-    display: block;
-    color: var(--accent-2);
-    font-weight: 600;
-    margin-top: auto;
-    padding-top: 1.5rem;
-    text-decoration: underline;
-    text-underline-offset: 0.25em;
 }
 
 .auto-slider__head {
@@ -527,7 +513,7 @@ strong {
     padding-top: 1rem;
 }
 
-.book-card .course-link {
+.book-card .link-card__cta {
     padding-top: 0.75rem;
 }
 
@@ -561,25 +547,24 @@ strong {
     }
 }
 
-.repo-card {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+/* 카드 전체가 링크인 카드: 강의·도서·GitHub 공통 */
+.link-card {
     color: var(--ink);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.repo-card:hover,
-.repo-card:focus-visible {
+.link-card:hover,
+.link-card:focus-visible {
     color: var(--ink);
     transform: translate(-2px, -2px);
 }
 
-.repo-card .title {
+.link-card .title {
     overflow-wrap: anywhere;
 }
 
-.repo-card__url {
+.link-card__cta {
+    display: block;
     margin-top: auto;
     padding-top: 1.25rem;
     color: var(--accent-2);
