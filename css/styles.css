@@ -9,6 +9,8 @@
     --accent-shadow: rgba(255, 106, 61, 0.35);
     --accent-2-shadow: rgba(45, 108, 223, 0.35);
     --accent-3-shadow: rgba(23, 161, 123, 0.35);
+    --accent-gray: #8f8b82;
+    --accent-gray-shadow: rgba(143, 139, 130, 0.35);
     --tier-1: #ffb08a;
     --tier-2: #ff8a5c;
     --tier-3: #ff6a3d;
@@ -35,6 +37,8 @@
     --accent-shadow: rgba(255, 138, 92, 0.4);
     --accent-2-shadow: rgba(112, 165, 255, 0.38);
     --accent-3-shadow: rgba(32, 201, 151, 0.38);
+    --accent-gray: #7a808b;
+    --accent-gray-shadow: rgba(122, 128, 139, 0.38);
     --tier-1: #ffb08a;
     --tier-2: #ff8a5c;
     --tier-3: #ff6a3d;
@@ -213,6 +217,12 @@ strong {
         0 18px 32px -24px var(--accent-3-shadow);
 }
 
+.sharp-card.is-gray {
+    border-color: var(--accent-gray);
+    box-shadow: 8px 8px 0 var(--accent-gray),
+        0 18px 32px -24px var(--accent-gray-shadow);
+}
+
 #problem .sharp-card {
     box-shadow: 8px 8px 0 var(--problem-shadow),
         0 18px 32px -24px var(--problem-shadow-soft);
@@ -259,6 +269,11 @@ strong {
 [data-theme="dark"] .sharp-card.is-green {
     box-shadow: 8px 8px 0 rgba(32, 201, 151, 0.5),
         0 18px 32px -24px rgba(32, 201, 151, 0.26);
+}
+
+[data-theme="dark"] .sharp-card.is-gray {
+    box-shadow: 8px 8px 0 rgba(122, 128, 139, 0.5),
+        0 18px 32px -24px rgba(122, 128, 139, 0.26);
 }
 
 [data-theme="dark"] .pricing-tier-1 {
