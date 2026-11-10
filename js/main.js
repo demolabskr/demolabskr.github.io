@@ -238,8 +238,8 @@ const initAutoSlider = (slider) => {
     const track = slider.querySelector(".auto-slider__track");
     const controls = slider.querySelector(".auto-slider__controls");
     const toggle = slider.querySelector(".auto-slider__toggle");
-    const prevButton = slider.querySelector("[data-slider-prev]");
-    const nextButton = slider.querySelector("[data-slider-next]");
+    const leftButton = slider.querySelector("[data-slider-left]");
+    const rightButton = slider.querySelector("[data-slider-right]");
     if (!viewport || !track) {
         return;
     }
@@ -368,12 +368,12 @@ const initAutoSlider = (slider) => {
         });
     }
 
-    prevButton?.addEventListener("click", () => {
-        slidePrev();
+    leftButton?.addEventListener("click", () => {
+        slideNext(true);
         restartTimer();
     });
-    nextButton?.addEventListener("click", () => {
-        slideNext(true);
+    rightButton?.addEventListener("click", () => {
+        slidePrev();
         restartTimer();
     });
 
