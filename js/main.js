@@ -236,7 +236,10 @@ const AUTO_SLIDER_DURATION = 600;
 const initAutoSlider = (slider) => {
     const viewport = slider.querySelector(".auto-slider__viewport");
     const track = slider.querySelector(".auto-slider__track");
+    const controls = slider.querySelector(".auto-slider__controls");
     const toggle = slider.querySelector(".auto-slider__toggle");
+    const prevButton = slider.querySelector("[data-slider-prev]");
+    const nextButton = slider.querySelector("[data-slider-next]");
     if (!viewport || !track) {
         return;
     }
@@ -258,13 +261,16 @@ const initAutoSlider = (slider) => {
         !document.hidden &&
         isOverflowing();
 
-    const slideNext = () => {
+    const getStep = (item) =>
+        item.getBoundingClientRect().width +
+        (parseFloat(getComputedStyle(track).columnGap) || 0);
+
+    const slideNext = (manual = false) => {
         const first = track.firstElementChild;
-        if (!first || isAnimating || !canPlay()) {
+        if (!first || isAnimating || !(manual ? isOverflowing() : canPlay())) {
             return;
         }
-        const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
-        const distance = first.getBoundingClientRect().width + gap;
+        const distance = getStep(first);
         isAnimating = true;
         track.style.transition = `transform ${AUTO_SLIDER_DURATION}ms ease`;
         track.style.transform = `translateX(${-distance}px)`;
@@ -276,10 +282,36 @@ const initAutoSlider = (slider) => {
         }, AUTO_SLIDER_DURATION);
     };
 
+    const slidePrev = () => {
+        const last = track.lastElementChild;
+        if (!last || isAnimating || !isOverflowing()) {
+            return;
+        }
+        isAnimating = true;
+        track.style.transition = "none";
+        track.prepend(last);
+        track.style.transform = `translateX(${-getStep(last)}px)`;
+        void track.offsetWidth;
+        track.style.transition = `transform ${AUTO_SLIDER_DURATION}ms ease`;
+        track.style.transform = "translateX(0)";
+        window.setTimeout(() => {
+            track.style.transition = "none";
+            isAnimating = false;
+        }, AUTO_SLIDER_DURATION);
+    };
+
+    const restartTimer = () => {
+        if (timer) {
+            window.clearInterval(timer);
+            timer = null;
+        }
+        update();
+    };
+
     const update = () => {
         const overflowing = isOverflowing();
-        if (toggle) {
-            toggle.hidden = !overflowing;
+        if (controls) {
+            controls.hidden = !overflowing;
         }
         if (canPlay()) {
             if (!timer) {
@@ -308,14 +340,17 @@ const initAutoSlider = (slider) => {
     };
 
     slider.addEventListener("focusin", (event) => {
-        if (event.target === toggle || !isKeyboardFocus(event.target)) {
+        if (controls?.contains(event.target) || !isKeyboardFocus(event.target)) {
             return;
         }
         isFocused = true;
         update();
     });
     slider.addEventListener("focusout", (event) => {
-        if (slider.contains(event.relatedTarget) && event.relatedTarget !== toggle) {
+        if (
+            slider.contains(event.relatedTarget) &&
+            !controls?.contains(event.relatedTarget)
+        ) {
             return;
         }
         isFocused = false;
@@ -332,6 +367,15 @@ const initAutoSlider = (slider) => {
             update();
         });
     }
+
+    prevButton?.addEventListener("click", () => {
+        slidePrev();
+        restartTimer();
+    });
+    nextButton?.addEventListener("click", () => {
+        slideNext(true);
+        restartTimer();
+    });
 
     if ("IntersectionObserver" in window) {
         new IntersectionObserver((entries) => {

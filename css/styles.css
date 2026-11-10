@@ -418,21 +418,29 @@ strong {
     margin-bottom: 0;
 }
 
-.auto-slider__toggle {
+.auto-slider__controls {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    flex-shrink: 0;
+}
+
+.auto-slider__controls[hidden] {
+    display: none;
+}
+
+.auto-slider__controls .button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 36px;
     height: 36px;
     padding: 0;
+    margin: 0;
     flex-shrink: 0;
 }
 
-.auto-slider__toggle[hidden] {
-    display: none;
-}
-
-.auto-slider__toggle svg {
+.auto-slider__controls svg {
     width: 16px;
     height: 16px;
     display: block;
